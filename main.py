@@ -24,6 +24,11 @@ Jimena:
 URI = "neo4j://127.0.0.1:7687"
 AUTH = ("neo4j", "password")
 DATABASE = "proyecto1"
+
+Brandon:
+URI = "neo4j://127.0.0.1:7687"
+AUTH = ("neo4j", "password")
+DATABASE = "proyecto1"
 """
 
 def initialize_db(driver):
