@@ -35,19 +35,17 @@ def initialize_db(driver):
         session.run("CREATE CONSTRAINT libro_id_unique IF NOT EXISTS FOR (l:Libro) REQUIRE l.idLibro IS UNIQUE")
 
 
-def main():
-    driver = GraphDatabase.driver(URI, auth = AUTH, database = DATABASE)
+def cargar_datos(driver): 
     initialize_db(driver)
     try:
-        personas = read_csv("CSV\\Persona.csv")
-        clubs = read_csv("CSV\\Club.csv")
-        autores = read_csv("CSV\\Autor.csv")
-        libros = read_csv("CSV\\Libro.csv")
-        membresias = read_csv("CSV\\Persona-club.csv")
-        autorias = read_csv("CSV\\Autor-libro.csv")
-        lecturas = read_csv("CSV\\Persona-libro.csv")
-        recomendaciones = read_csv("CSV\\Club-libro.csv")
-
+        personas = read_csv("CSV/Persona.csv")
+        clubs = read_csv("CSV/Club.csv")
+        autores = read_csv("CSV/Autor.csv")
+        libros = read_csv("CSV/Libro.csv")
+        membresias = read_csv("CSV/Persona-club.csv")
+        autorias = read_csv("CSV/Autor-libro.csv")
+        lecturas = read_csv("CSV/Persona-libro.csv")
+        recomendaciones = read_csv("CSV/Club-libro.csv")
 
         add_personas(driver, personas)
         add_clubs(driver, clubs)
@@ -58,12 +56,5 @@ def main():
         add_lecturas(driver, lecturas)
         add_recomendaciones(driver, recomendaciones)
 
-        print(get_persona(driver, 4))
-        print(get_club(driver, 2))
-        print(get_autor(driver, 3))
-        print(get_libro(driver, 4))
     finally:
         driver.close()
-
-
-main()
