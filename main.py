@@ -12,7 +12,12 @@ from recomendacion import add_recomendaciones, add_recomendacion
 
 URI = "neo4j://localhost:7687"
 AUTH = ("neo4j", "password")
-DATABASE = "dbtest2"
+DATABASE = "Proyecto1"
+
+"""
+Fabián: DATABASE = "dbtest2"
+Jimena: DATABASE = "Proyecto1"
+"""
 
 def initialize_db(driver):
     with driver.session() as session:
