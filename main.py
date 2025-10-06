@@ -10,13 +10,20 @@ from lectura import add_lecturas, add_lectura
 from recomendacion import add_recomendaciones, add_recomendacion
 
 
-URI = "neo4j://localhost:7687"
+URI = "neo4j://127.0.0.1:7687"
 AUTH = ("neo4j", "password")
-DATABASE = "Proyecto1"
+DATABASE = "proyecto1"
 
 """
-Fabián: DATABASE = "dbtest2"
-Jimena: DATABASE = "Proyecto1"
+Fabián: 
+URI = "neo4j://localhost:7687"
+AUTH = ("neo4j", "password")
+DATABASE = "dbtest2"
+
+Jimena: 
+URI = "neo4j://127.0.0.1:7687"
+AUTH = ("neo4j", "password")
+DATABASE = "proyecto1"
 """
 
 def initialize_db(driver):
