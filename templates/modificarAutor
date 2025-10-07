@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block titulo %}Modificar autor · Clubes de Lectura{% endblock %}
+{% block contenido %}
+  <div class="hero" style="text-align:center">
+    <div class="col" style="margin:auto; max-width:640px">
+      <div class="eyebrow">Autores</div>
+      <h1>Modificar autor</h1>
+      <p class="lead">Selecciona o ingresa el autor a editar.</p>
+
+      <!-- Placeholder: aquí puedes poner un selector de autor o un buscador -->
+      <form action="{{ url_for('vista_modificar_autor') }}" method="post" style="margin-top:1rem; text-align:left">
+        <div class="form-control">
+          <label>ID del autor (o selección)</label>
+          <input type="text" name="id_autor" placeholder="Ej: A123" required />
+        </div>
+
+        <!-- Campos a modificar; puedes cargarlos por ID en GET en tu backend -->
+        <div class="form-control">
+          <label>Nombre</label>
+          <input type="text" name="nombre" />
+        </div>
+        <div class="form-control">
+          <label>Apellidos</label>
+          <input type="text" name="apellidos" />
+        </div>
+        <div class="form-control">
+          <label>Nacionalidad</label>
+          <input type="text" name="nacionalidad" />
+        </div>
+        <div class="form-control">
+          <label>Fecha de nacimiento</label>
+          <input type="date" name="fecha_nacimiento" />
+        </div>
+
+        <div class="actions" style="justify-content:flex-end; gap:.5rem; margin-top:1rem">
+          <a class="btn" href="{{ url_for('vista_autores') }}">⬅ Cancelar</a>
+          <button class="btn btn--primary" type="submit">💾 Guardar cambios</button>
+        </div>
+      </form>
+
+      <div class="actions" style="justify-content:center; margin-top:1rem">
+        <a class="btn" href="{{ url_for('vista_autores') }}">⬅ Volver a Autores</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,15 +1,15 @@
 {% extends "base.html" %}
-{% block titulo %}Autores · Clubes de Lectura{% endblock %}
+{% block titulo %}Persona · Clubes de Lectura{% endblock %}
 {% block contenido %}
   <div class="hero" style="text-align:center">
     <div class="col" style="margin:auto">
       <div class="eyebrow">Sección</div>
-      <h1>Autores</h1>
-      <p class="lead">Seleccione una opción.</p>
+      <h1>Persona</h1>
+      <p class="lead">Gestiona la información de una persona.</p>
 
       <div class="actions" style="justify-content:center; gap:.5rem; margin-top:1rem">
-        <a class="btn btn--primary" href="{{ url_for('vista_agregar_autor') }}">➕ Agregar</a>
-        <a class="btn" href="{{ url_for('vista_modificar_autor') }}">✏️ Modificar</a>
+        <a class="btn btn--primary" href="{{ url_for('vista_agregar_persona') }}">➕ Agregar</a>
+        <a class="btn" href="{{ url_for('vista_modificar_persona') }}">✏️ Modificar</a>
         <a class="btn" href="{{ url_for('pagina_principal') }}">⬅ Volver a Página principal</a>
       </div>
     </div>
