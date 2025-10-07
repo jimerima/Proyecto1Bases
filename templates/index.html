@@ -1,20 +1,33 @@
 {% extends "base.html" %}
-{% block titulo %}Página principal · Clubes de Lectura{% endblock %}
+{% block titulo %}Inicio · Clubes de Lectura{% endblock %}
 
 {% block contenido %}
+  {% with msgs = get_flashed_messages() %}
+    {% if msgs %}
+      <div style="margin:0 0 16px">
+        {% for m in msgs %}
+          <div style="background:linear-gradient(180deg,#ecfeff,#cffafe);
+                      color:#0b1020;border:1px solid rgba(2,132,199,.25);
+                      padding:10px 14px;border-radius:12px;box-shadow:0 6px 14px rgba(2,132,199,.25);
+                      font-weight:600;letter-spacing:.2px;margin-bottom:8px;">
+            {{ m }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
   <div class="hero" style="text-align:center">
     <div class="col" style="margin:auto">
-      <div class="eyebrow">Menú</div>
-      <h1>Página principal — Seleccione una opción</h1>
+      <div class="eyebrow">Bienvenido</div>
+      <h1>Clubes de lectura</h1>
       <p class="lead" style="max-width:60ch;margin:0 auto 1rem">
-        Elige una sección. Se abrirá una ventana en blanco con el título correspondiente (sin lógica, solo interfaz).
+        Presiona “Cargar datos” para inicializar el grafo.
       </p>
-
-      <div class="actions" style="justify-content:center; flex-wrap:wrap; gap:14px">
-        <a class="btn btn--primary" target="_blank" href="{{ url_for('pagina_en_blanco', nombre='Autores') }}">🖊️ Autores</a>
-        <a class="btn" target="_blank" href="{{ url_for('pagina_en_blanco', nombre='Libros') }}" style="background:linear-gradient(90deg,#a7f3d0,#f9a8d4); color:#0b1020;">📖 Libros</a>
-        <a class="btn" target="_blank" href="{{ url_for('pagina_en_blanco', nombre='Club') }}" style="background:linear-gradient(90deg,#c7d2fe,#bae6fd); color:#0b1020;">🏛️ Club</a>
-        <a class="btn" target="_blank" href="{{ url_for('pagina_en_blanco', nombre='Asociar') }}" style="background:linear-gradient(90deg,#fde68a,#fca5a5); color:#0b1020;">🔗 Asociar</a>
+      <div class="actions" style="justify-content:center">
+        <form action="{{ url_for('ruta_cargar_datos') }}" method="post">
+          <button class="btn" type="submit">Cargar datos</button>
+        </form>
       </div>
     </div>
   </div>
