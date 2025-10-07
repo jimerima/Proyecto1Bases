@@ -25,7 +25,16 @@
         Presiona “Cargar datos” para inicializar el grafo.
       </p>
       <div class="actions" style="justify-content:center">
-        <form action="{{ url_for('ruta_cargar_datos') }}" method="post">
+        <form action="{{ url_for('ruta_cargar_datos') }}" method="post" enctype="multipart/form-data">
+          
+          <input id="datos" type="file" name="datos" multiple accept=".csv" style="display:none">
+
+          
+          <button class="btn" type="button" onclick="document.getElementById('datos').click()">
+            Seleccionar CSVs
+          </button>
+
+          
           <button class="btn" type="submit">Cargar datos</button>
         </form>
       </div>

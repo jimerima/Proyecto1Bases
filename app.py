@@ -1,51 +1,108 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from main import cargar_datos 
-from persona import add_persona, get_persona, update_persona
-from autor import add_autor, get_autor, update_autor
-from club import add_club, get_club, update_club
-from libro import add_libro, get_libro, update_libro
+from persona import add_persona, get_persona, update_persona, add_personas
+from autor import add_autor, get_autor, update_autor, add_autores
+from club import add_club, get_club, update_club, add_clubs
+from libro import add_libro, get_libro, update_libro, add_libros
+from membresia import add_membresia, add_membresias
+from autoria import add_autoria, add_autorias
+from lectura import add_lectura, add_lecturas
+from recomendacion import add_recomendacion, add_recomendaciones
 from neo4j import GraphDatabase
+import csv
+import io
 
 app = Flask(__name__)
 app.secret_key = "dev"
 
 URI = "neo4j://localhost:7687"
 AUTH = ("neo4j", "password")
-DATABASE = "Proyecto1"
-
-"""
-Fabián: 
-URI = "neo4j://localhost:7687"
-AUTH = ("neo4j", "password")
-DATABASE = "dbtest2"
-
-Jimena: 
-URI = "neo4j://127.0.0.1:7687"
-AUTH = ("neo4j", "password")
 DATABASE = "proyecto1"
 
-Brandon:
-URI = "neo4j://127.0.0.1:7687"
-AUTH = ("neo4j", "password")
-DATABASE = "proyecto1"
-"""
 
 driver = GraphDatabase.driver(URI, auth=AUTH, database=DATABASE)
+
+def initialize_db(driver):
+    with driver.session() as session:
+        session.run("MATCH (n) DETACH DELETE n")
+        session.run("CREATE CONSTRAINT persona_id_unique IF NOT EXISTS FOR (p:Persona) REQUIRE p.id IS UNIQUE")
+        session.run("CREATE CONSTRAINT club_id_unique IF NOT EXISTS FOR (c:Club) REQUIRE c.idClub IS UNIQUE")
+        session.run("CREATE CONSTRAINT autor_id_unique IF NOT EXISTS FOR (a:Autor) REQUIRE a.idAutor IS UNIQUE")
+        session.run("CREATE CONSTRAINT libro_id_unique IF NOT EXISTS FOR (l:Libro) REQUIRE l.idLibro IS UNIQUE")
+
 
 # ================== RUTAS ==================
 
 @app.route("/")
 def index():
+    initialize_db(driver)
     return render_template("index.html")
 
 @app.route("/cargar-datos", methods=["POST"])
 def ruta_cargar_datos():
-    try:
-        cargar_datos(driver)
-        return redirect(url_for("pagina_principal"))
-    except Exception as e:
-        flash(f"Error cargando datos: {e}")
+    datos = request.files.getlist("datos")
+        
+    if not datos:
+        flash("No se seleccionaron archivos.", "error")
         return redirect(url_for("index"))
+
+    NODE_FILES = {"Persona.csv", "Club.csv", "Autor.csv", "Libro.csv"}
+    REL_FILES  = {"Persona-club.csv", "Autor-libro.csv", "Persona-libro.csv", "Club-libro.csv"}
+    KNOWN = NODE_FILES | REL_FILES
+
+    ok, unknown = [], []
+    parsed = [] 
+
+    for archivo in datos:
+        nombre = archivo.filename.strip()
+        if nombre not in KNOWN:
+            unknown.append(nombre)
+            continue
+        texto = io.TextIOWrapper(archivo.stream, encoding="utf-8-sig", newline="")
+        reader = csv.DictReader(texto, delimiter=";")
+        data_list = list(reader)
+        parsed.append((nombre, data_list))
+
+    
+    def dispatch(nombre, data_list):
+        match nombre:
+            case "Persona.csv":         add_personas(driver, data_list)
+            case "Club.csv":            add_clubs(driver, data_list)
+            case "Autor.csv":           add_autores(driver, data_list)
+            case "Libro.csv":           add_libros(driver, data_list)
+            case "Persona-club.csv":    add_membresias(driver, data_list)
+            case "Autor-libro.csv":     add_autorias(driver, data_list)
+            case "Persona-libro.csv":   add_lecturas(driver, data_list)
+            case "Club-libro.csv":      add_recomendaciones(driver, data_list)
+
+    
+    for nombre, data_list in parsed:
+        if nombre in NODE_FILES:
+            try:
+                dispatch(nombre, data_list)
+                ok.append(f"{nombre}: {len(data_list)} registros cargados.")
+            except Exception as e:
+                flash(f"Error cargando {nombre}: {e}", "error")
+
+
+    for nombre, data_list in parsed:
+        if nombre in REL_FILES:
+            try:
+                dispatch(nombre, data_list)
+                ok.append(f"{nombre}: {len(data_list)} registros cargados.")
+            except Exception as e:
+                flash(f"Error cargando {nombre}: {e}", "error")
+
+    if not ok:
+        flash("No se cargaron archivos válidos.", "error")
+        return redirect(url_for("index"))
+    if ok:
+        flash("Archivos cargados:\n" + "\n".join(ok), "success")
+    if unknown:
+        flash("Archivos no reconocidos:\n" + "\n".join(unknown), "error")
+    
+
+    return redirect(url_for("pagina_principal")) 
+
 
 @app.route("/PaginaPrincipal")
 def pagina_principal():
