@@ -30,7 +30,7 @@ def initialize_db(driver):
         session.run("CREATE CONSTRAINT libro_id_unique IF NOT EXISTS FOR (l:Libro) REQUIRE l.idLibro IS UNIQUE")
 
 
-# ================== RUTAS ==================
+# ------------------------- RUTAS -------------------------
 
 @app.route("/")
 def index():
@@ -136,41 +136,29 @@ def vista_persona():
 def vista_agregar_persona():
     return render_template("agregarPersona.html")
 
-# ------------------------- Opciones de agregar y modificar -------------------------
+@app.route("/modificarPersona")
+def vista_modificar_persona():
+    return render_template("vista_modificar_persona.html")
 
+# ------------------------- Opciones de agregar y modificar -------------------------
 
 # PERSONA
 
 @app.route("/agregarPersona", methods=["GET", "POST"])
 def agregar_persona():
     if request.method == "POST":
-        pId = request.form.get("id_persona")
+        pId = generar_id_persona(driver) 
         pNombre = request.form.get("nombre")
         pTipoLector = request.form.get("tipo_lector")
+        
         add_persona(driver, pId, pNombre, pTipoLector)
-        flash("Persona agregada correctamente.", "success")
+        
+        flash("Persona agregada correctamente con ID: " + pId, "success")
         return redirect(url_for("vista_persona"))
     
     nuevo_id = generar_id_persona(driver)
     
     return render_template("agregarPersona.html", nuevo_id=nuevo_id)
-
-
-@app.route("/persona/modificar", methods=["GET","POST"], endpoint="vista_modificar_persona")
-def persona_modificar():
-    if request.method == "POST":
-        # TODO: leer y actualizar
-        # idp  = request.form.get("id_persona")
-        # nom  = request.form.get("nombre")
-        # apes = request.form.get("apellidos")
-        # corr = request.form.get("correo")
-        # tel  = request.form.get("telefono")
-        # nac  = request.form.get("fecha_nacimiento")
-        # actualizar_persona(idp, ...)
-        flash("Persona modificada correctamente.", "success")
-        return redirect(url_for("vista_persona"))
-    return render_template("modificar_persona.html")
-
 
 # ================== MAIN ==================
 if __name__ == "__main__":

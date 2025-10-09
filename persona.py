@@ -20,10 +20,17 @@ def update_persona(driver, pId, pNombre, pTipoLector):
     
 
 def add_persona(driver, pId, pNombre, pTipoLector):
-    driver.execute_query(
-        "MERGE (p:Persona {id: $idPersona, Nombre: $Nombre, TipoLector: $TipoLector})",
-        idPersona = int(pId), Nombre = pNombre, TipoLector = pTipoLector
+    query = (
+        "CREATE (p:Persona {id: $id, Nombre: $Nombre, TipoLector: $TipoLector})"
     )
+    
+    params = {
+        "id": int(pId),
+        "Nombre": pNombre,
+        "TipoLector": pTipoLector
+    }
+    
+    driver.execute_query(query, params)
 
 def add_personas(driver, pListaPersonas):
     for persona in pListaPersonas:
@@ -31,23 +38,41 @@ def add_personas(driver, pListaPersonas):
         print("Persona añadida:", persona["Nombre"])
 
 def listar_personas(driver):
-    result = driver.execute_query(
-        "MATCH (p:Persona) RETURN p.idPersona AS id, p.Nombre AS nombre, p.TipoLector AS tipoLector"
+    query_result = driver.execute_query(
+        "MATCH (p:Persona) RETURN p.id AS id, p.Nombre AS nombre, p.TipoLector AS tipoLector"
     )
+    
+    try:
+        records = query_result.records
+    except AttributeError:
+
+        records = query_result 
 
     personas = {}
-    for record in result:
-        personas[record['id']] = {
-            "nombre": record['nombre'],
-            "tipo_lector": record['tipoLector']
+    
+    for record in records:
+        try:
+            persona_id = record[0] 
+            nombre = record[1]
+            tipo_lector = record[2]
+            
+        except (TypeError, IndexError):
+            persona_id = record['id'] 
+            nombre = record['nombre']
+            tipo_lector = record['tipoLector']
+        
+        personas[persona_id] = {
+            "nombre": nombre,
+            "tipo_lector": tipo_lector
         }
     
     return personas
 
 
 def generar_id_persona(driver):
-    result = driver.execute_query("MATCH (p:Persona) RETURN count(p) AS total")
-    total_personas = result[0]['total']
-    
+
+    result = listar_personas(driver) 
+    total_personas = len(result) 
     nuevo_id = total_personas + 1
-    return nuevo_id
+
+    return str(nuevo_id)
