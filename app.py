@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from persona import add_persona, get_persona, update_persona, add_personas
+from persona import *
 from autor import add_autor, get_autor, update_autor, add_autores
 from club import add_club, get_club, update_club, add_clubs
 from libro import add_libro, get_libro, update_libro, add_libros
@@ -132,57 +132,29 @@ def vista_consultas():
 def vista_persona():
     return render_template("persona.html")
 
+@app.route("/agregarPersona")
+def vista_agregar_persona():
+    return render_template("agregarPersona.html")
 
-# Opciones de agregar y modificar
+# ------------------------- Opciones de agregar y modificar -------------------------
 
-#AUTORES
-
-# --- Autores: listar (con botones Agregar/Modificar) ---
-
-# --- Autores: agregar ---
-@app.route("/autores/agregar", methods=["GET", "POST"])
-def vista_agregar_autor():
-    if request.method == "POST":
-        # TODO: leer campos del form y guardar
-        # nombre = request.form.get("nombre")
-        # apellidos = request.form.get("apellidos")
-        # nacionalidad = request.form.get("nacionalidad")
-        # fecha_nacimiento = request.form.get("fecha_nacimiento")
-        # guardar_autor(...)
-        flash("Autor agregado correctamente.", "success")
-        return redirect(url_for("vista_autores"))
-    return render_template("agregar_autor.html")
-
-# --- Autores: modificar ---
-@app.route("/autores/modificar", methods=["GET", "POST"])
-def vista_modificar_autor():
-    if request.method == "POST":
-        # TODO: leer id y campos a actualizar
-        # id_autor = request.form.get("id_autor")
-        # nombre = request.form.get("nombre")
-        # ...
-        # actualizar_autor(id_autor, ...)
-        flash("Autor modificado correctamente.", "success")
-        return redirect(url_for("vista_autores"))
-    # En GET podrías recibir ?id= y precargar datos si quieres
-    return render_template("modificar_autor.html")
 
 # PERSONA
 
-@app.route("/persona/agregar", methods=["GET","POST"], endpoint="vista_agregar_persona")
-def persona_agregar():
+@app.route("/agregarPersona", methods=["GET", "POST"])
+def agregar_persona():
     if request.method == "POST":
-        # TODO: leer y guardar
-        # idp  = request.form.get("id_persona")
-        # nom  = request.form.get("nombre")
-        # apes = request.form.get("apellidos")
-        # corr = request.form.get("correo")
-        # tel  = request.form.get("telefono")
-        # nac  = request.form.get("fecha_nacimiento")
-        # guardar_persona(...)
+        pId = request.form.get("id_persona")
+        pNombre = request.form.get("nombre")
+        pTipoLector = request.form.get("tipo_lector")
+        add_persona(driver, pId, pNombre, pTipoLector)
         flash("Persona agregada correctamente.", "success")
         return redirect(url_for("vista_persona"))
-    return render_template("agregar_persona.html")
+    
+    nuevo_id = generar_id_persona(driver)
+    
+    return render_template("agregarPersona.html", nuevo_id=nuevo_id)
+
 
 @app.route("/persona/modificar", methods=["GET","POST"], endpoint="vista_modificar_persona")
 def persona_modificar():
