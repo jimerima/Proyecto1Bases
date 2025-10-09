@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block titulo %}Modificar club · Clubes de Lectura{% endblock %}
+{% block contenido %}
+  <div class="hero" style="text-align:center">
+    <div class="col" style="margin:auto; max-width:640px">
+      <div class="eyebrow">Clubes</div>
+      <h1>Modificar club</h1>
+      <p class="lead">Selecciona el club a editar y actualiza sus datos.</p>
+
+      <form action="{{ url_for('modificar_club') }}" method="post" style="margin-top:1rem; text-align:left">
+        
+                <div class="form-control">
+          <label for="club_id">Seleccionar Club (ID | Ubicación)</label>
+          <select name="id" id="club_id" required>
+                <option value="">-- Seleccione un club a modificar --</option>
+                {% for id, data in clubes.items() %}
+                <option value="{{ id }}">{{ id }} | {{ data.ubicacion }}</option>
+                {% endfor %}
+          </select>
+        </div>
+
+                <div class="form-control">
+          <label>Nueva Ubicación del Club</label>
+          <input type="text" name="ubicacion" required placeholder="Ubicación (Obligatorio)" />
+        </div>
+        
+        <div class="form-control">
+          <label>Nuevo Tema o Género Principal</label>
+          <select name="tematica" required>
+                <option value="">-- Seleccione nuevo Tema --</option>
+                <option value="Ficción Clásica">Ficción Clásica</option>
+                <option value="Misterio/Thriller">Misterio/Thriller</option>
+                <option value="Ciencia Ficción">Ciencia Ficción</option>
+                <option value="Fantasía Épica">Fantasía Épica</option>
+                <option value="No Ficción">No Ficción</option>
+                <option value="Historia">Historia</option>
+                <option value="Novela Gráfica">Novela Gráfica</option>
+          </select>
+        </div>
+
+        <div class="actions" style="justify-content:flex-end; gap:.5rem; margin-top:1rem">
+          <a class="btn" href="{{ url_for('vista_clubes') }}">⬅ Cancelar</a>
+          <button class="btn btn--primary" type="submit">💾 Guardar cambios</button>
+        </div>
+      </form>
+
+      <div class="actions" style="justify-content:center; margin-top:1rem">
+        <a class="btn" href="{{ url_for('vista_clubes') }}">⬅ Volver a Clubes</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

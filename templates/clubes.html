@@ -1,14 +1,17 @@
 {% extends "base.html" %}
 {% block titulo %}Clubes · Clubes de Lectura{% endblock %}
 {% block contenido %}
-  <div class="hero" style="text-align:center">
-    <div class="col" style="margin:auto">
-      <div class="eyebrow">Sección</div>
-      <h1>Clubes</h1>
-      <p class="lead">Página en blanco (pendiente de implementar).</p>
-      <div class="actions" style="justify-content:center">
-        <a class="btn" href="{{ url_for('pagina_principal') }}">Volver a la página principal</a>
-      </div>
-    </div>
-  </div>
+  <div class="hero" style="text-align:center">
+    <div class="col" style="margin:auto">
+      <div class="eyebrow">Sección</div>
+      <h1>Clubes</h1>
+      <p class="lead">Seleccione una opción.</p>
+
+      <div class="actions" style="justify-content:center; gap:.5rem; margin-top:1rem">
+        <a class="btn" href="{{ url_for('agregar_club') }}">➕ Agregar</a>
+        <a class="btn" href="{{ url_for('modificar_club') }}">✏️ Modificar</a>
+        <a class="btn" href="{{ url_for('pagina_principal') }}">⬅ Volver a Página principal</a>
+      </div>
+    </div>
+  </div>
 {% endblock %}

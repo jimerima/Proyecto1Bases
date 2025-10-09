@@ -172,6 +172,17 @@ def vista_modificar_libro():
         libros = {}
     return render_template("modificarLibro.html", libros=libros)
 
+@app.route("/agregarClub")
+def vista_agregar_club():
+    return render_template("agregarClub.html")
+
+@app.route("/modificarClub", methods=["GET"])
+def vista_modificar_club():    
+    clubes = listar_clubs(driver)
+    if clubes is None:
+        clubes = {}
+    return render_template("modificarClub.html", clubes=clubes)
+
 # -------------------------------------------------- Opciones de agregar y modificar --------------------------------------------------
 
 # ------------------------- Persona -------------------------
@@ -276,6 +287,38 @@ def modificar_libro():
         return redirect(url_for("vista_libros"))
 
     return render_template("modificarLibro.html", libros=libros)
+
+##------------------------- Clubes -------------------------
+# Agregar club
+@app.route("/agregarClub", methods=["GET", "POST"])
+def agregar_club():
+    if request.method == "POST":
+        cId = generar_id_club(driver) 
+        cUbicacion = request.form.get("ubicacion") 
+        cTematica = request.form.get("tematica")     
+        add_club(driver, cId, cUbicacion, cTematica) 
+        
+        flash("Club agregado correctamente con ID: " + cId, "success")
+        return redirect(url_for("vista_clubes"))
+    
+    nuevo_id = generar_id_club(driver)
+    return render_template("agregarClub.html", nuevo_id=nuevo_id)
+
+# Modificar club
+@app.route("/modificarClub", methods=["GET", "POST"])
+def modificar_club():
+    if request.method == "POST":
+        cId = request.form.get("id")
+        cUbicacion = request.form.get("ubicacion")
+        cTematica = request.form.get("tematica")
+        
+        update_club(driver, cId, cUbicacion, cTematica)
+        
+        flash("Club modificado correctamente con ID: " + cId, "success")
+        return redirect(url_for("vista_clubes"))
+    
+    clubes = listar_clubs(driver)
+    return render_template("modificarClub.html", clubes=clubes)
 
 #-------------------------------------------------- MAIN --------------------------------------------------
 if __name__ == "__main__":
