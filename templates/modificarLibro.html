@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block titulo %}Modificar libro · Clubes de Lectura{% endblock %}
+{% block contenido %}
+  <div class="hero" style="text-align:center">
+    <div class="col" style="margin:auto; max-width:640px">
+      <div class="eyebrow">Libros</div>
+      <h1>Modificar libro</h1>
+      <p class="lead">Selecciona el libro a editar y actualiza los campos.</p>
+
+      <form action="{{ url_for('modificar_libro') }}" method="post" style="margin-top:1rem; text-align:left">
+        
+                <div class="form-control">
+          <label for="libro_id">Seleccionar Libro (ID | Título)</label>
+          <select name="id" id="libro_id" required>
+                <option value="">-- Seleccione un libro a modificar --</option>
+                {# 'libros' es un diccionario {idLibro: {titulo: 'X', ...}} #}
+                {% for id, data in libros.items() %}
+                <option value="{{ id }}">{{ id }} | {{ data.titulo }}</option>
+                {% endfor %}
+          </select>
+        </div>
+
+                <div class="form-control">
+          <label>Nuevo Título</label>
+          <input type="text" name="titulo" required placeholder="Título (Obligatorio)" />
+        </div>
+        
+                <div class="form-control">
+          <label>Nuevo Género</label>
+          <select name="genero" required>
+                <option value="">-- Seleccione nuevo Género --</option>
+                <option value="Ficción">Ficción</option>
+                <option value="Misterio">Misterio</option>
+                <option value="Ciencia Ficción">Ciencia Ficción</option>
+                <option value="Fantasía">Fantasía</option>
+                <option value="Romance">Romance</option>
+                <option value="Thriller">Thriller</option>
+                <option value="Historia">Historia</option>
+                <option value="Biografía">Biografía</option>
+                <option value="Ensayo">Ensayo</option>
+                <option value="Poesía">Poesía</option>
+          </select>
+        </div>
+        
+                <div class="form-control">
+          <label>Nuevo Año de Publicación</label>
+          <input type="number" name="anno" required min="1000" placeholder="Ej: 2024" />
+        </div>
+        
+                <div class="actions" style="justify-content:flex-end; gap:.5rem; margin-top:1rem">
+          <a class="btn" href="{{ url_for('vista_libros') }}">⬅ Cancelar</a>
+          <button class="btn btn--primary" type="submit">💾 Guardar cambios</button>
+        </div>
+      </form>
+
+      <div class="actions" style="justify-content:center; margin-top:1rem">
+        <a class="btn" href="{{ url_for('vista_libros') }}">⬅ Volver a Libros</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

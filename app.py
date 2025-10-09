@@ -161,6 +161,15 @@ def vista_modificar_autor():
     autores = listar_autores(driver)
     return render_template("modificarAutor.html", autores=autores)
 
+@app.route("/agregarLibro")
+def vista_agregar_libro():
+    return render_template("agregarLibro.html")
+
+@app.route("/modificarLibro", methods=["GET"])
+def vista_modificar_libro():    
+    libros = listar_libros(driver)
+    return render_template("modificarLibro.html", libros=libros)
+
 # -------------------------------------------------- Opciones de agregar y modificar --------------------------------------------------
 
 # ------------------------- Persona -------------------------
@@ -235,38 +244,44 @@ def modificar_autor():
 # Agregar libro
 @app.route("/agregarLibro", methods=["GET", "POST"])
 def agregar_libro():
+    autores = listar_autores(driver) 
+    nuevo_id = generar_id_libro(driver) 
+    
+    context = {
+        "autores": autores, 
+        "nuevo_id": nuevo_id,
+    }
+
     if request.method == "POST":
         lId = generar_id_libro(driver) 
         lTitulo = request.form.get("titulo")
         lGenero = request.form.get("genero")
-        lAnioPublicacion = request.form.get("anio_publicacion")
+        lAnno = request.form.get("anno")
         
-        add_libro(driver, lId, lTitulo, lGenero, lAnioPublicacion)
+        add_libro(driver, lId, lTitulo, lGenero, lAnno) 
         
-        flash("Libro agregado correctamente con ID: " + lId, "success")
+        flash("Libro agregado correctamente con ID: " + str(lId), "success")
         return redirect(url_for("vista_libros"))
-    
-    nuevo_id = generar_id_libro(driver)
-    
-    return render_template("agregarLibro.html", nuevo_id=nuevo_id)
+
+    return render_template("agregarLibro.html", **context)
 
 # Modificar libro
 @app.route("/modificarLibro", methods=["GET", "POST"])
 def modificar_libro():
+    libros = listar_libros(driver) 
+    
     if request.method == "POST":
-        lId = request.form.get("id")
+        lId = request.form.get("id")   
         lTitulo = request.form.get("titulo")
         lGenero = request.form.get("genero")
-        lAnioPublicacion = request.form.get("anio_publicacion")
+        lAnno = request.form.get("anno")
         
-        update_libro(driver, lId, lTitulo, lGenero, lAnioPublicacion)
+        update_libro(driver, lId, lTitulo, lGenero, lAnno)
         
-        flash("Libro modificado correctamente con ID: " + lId, "success")
+        flash("Libro modificado correctamente con ID: " + str(lId), "success")
         return redirect(url_for("vista_libros"))
-    
-    libros = listar_libros(driver)
-    return render_template("modificarLibro.html", libros=libros)
 
+    return render_template("modificarLibro.html", libros=libros)
 
 #-------------------------------------------------- MAIN --------------------------------------------------
 if __name__ == "__main__":
