@@ -1,13 +1,26 @@
 {% extends "base.html" %}
+
 {% block titulo %}Consultas · Clubes de Lectura{% endblock %}
+
 {% block contenido %}
-  <div class="hero" style="text-align:center">
-    <div class="col" style="margin:auto">
-      <div class="eyebrow">Sección</div>
+  <div class="hero" style="text-align:center; padding-top: 2rem;">
+    <div class="col" style="margin:auto; max-width:640px;">
+      <div class="eyebrow" style="font-weight: bold; color: #000;">Sección</div>
       <h1>Consultas</h1>
-      <p class="lead">Página en blanco (pendiente de implementar).</p>
-      <div class="actions" style="justify-content:center">
-        <a class="btn" href="{{ url_for('pagina_principal') }}">Volver a la página principal</a>
+      <p class="lead" style="text-align: center; font-size: 1.2rem; margin-bottom: 1.5rem; color: #000;">Página en blanco (pendiente de implementar).</p>
+      
+      <!-- Botones para cada consulta -->
+      <div class="actions" style="display: flex; flex-direction: column; justify-content: center; gap: 1rem; margin-top: 2rem;">
+        <a class="btn btn--primary" href="{{ url_for('vista_consulta1') }}" style="text-decoration: none;">📚 Consulta 1: Libros leídos por persona</a>
+        <a class="btn btn--primary" href="{{ url_for('vista_consulta2') }}" style="text-decoration: none;">👥 Consulta 2: Personas del club</a>
+        <a class="btn btn--primary" href="{{ url_for('vista_consulta3') }}" style="text-decoration: none;">📖 Consulta 3: Personas con más libros</a>
+        <a class="btn btn--primary" href="{{ url_for('vista_consulta4') }}" style="text-decoration: none;">📚 Consulta 4: Personas en más clubes</a>
+        <a class="btn btn--primary" href="{{ url_for('vista_consulta5') }}" style="text-decoration: none;">📚 Consulta 5: Libros más populares</a>
+      </div>
+
+      <!-- Botón para volver a la página principal -->
+      <div class="actions" style="justify-content:center; margin-top: 2rem;">
+        <a class="btn btn--secondary" href="{{ url_for('pagina_principal') }}" style="text-decoration: none; background-color: #e0e0e0; color: #000;">⬅ Volver a la página principal</a>
       </div>
     </div>
   </div>

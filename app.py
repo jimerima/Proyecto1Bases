@@ -115,6 +115,8 @@ def ruta_cargar_datos():
 
 #------------------------- HTML -------------------------
 
+# Rutas para vistas principales
+
 @app.route("/PaginaPrincipal")
 def pagina_principal():
     return render_template("PaginaPrincipal.html")
@@ -142,6 +144,8 @@ def vista_consultas():
 @app.route("/persona")
 def vista_persona():
     return render_template("persona.html")
+
+# Rutas para agregar y modificar
 
 @app.route("/agregarPersona")
 def vista_agregar_persona():
@@ -182,6 +186,55 @@ def vista_modificar_club():
     if clubes is None:
         clubes = {}
     return render_template("modificarClub.html", clubes=clubes)
+
+# Rutas para asociaciones (pendiente de implementar la lógica)
+
+@app.route("/Persona-Club", methods=["GET"])
+def vista_asociar_persona_a_club():
+    # Lógica para la asociación de personas a clubs (pendiente de implementar)
+    return render_template("Persona-Club.html")
+
+@app.route("/Persona-Libro", methods=["GET"])
+def vista_asociar_persona_a_libro():
+    # Lógica para la asociación de personas a libros (pendiente de implementar)
+    return render_template("Persona-Libro.html")
+
+@app.route("/Club-Libro", methods=["GET"])
+def vista_asociar_club_a_libro():
+    # Lógica para la asociación de clubes a libros (pendiente de implementar)
+    return render_template("Club-Libro.html")
+
+@app.route("/Autor-Libro", methods=["GET"])
+def vista_asociar_autor_a_libro():
+    # Lógica para la asociación de autores a libros (pendiente de implementar)
+    return render_template("Autor-Libro.html")
+
+# Rutas para consultas (pendiente de implementar la lógica)
+
+@app.route("/consulta1", methods=["GET"])
+def vista_consulta1():
+    # Lógica para la consulta 1
+    return render_template("consulta1.html")
+
+@app.route("/consulta2", methods=["GET"])
+def vista_consulta2():
+    # Lógica para la consulta 2
+    return render_template("consulta2.html")
+
+@app.route("/consulta3", methods=["GET"])
+def vista_consulta3():
+    # Lógica para la consulta 3
+    return render_template("consulta3.html")
+
+@app.route("/consulta4", methods=["GET"])
+def vista_consulta4():
+    # Lógica para la consulta 4
+    return render_template("consulta4.html")
+
+@app.route("/consulta5", methods=["GET"])
+def vista_consulta5():
+    # Lógica para la consulta 5
+    return render_template("consulta5.html")
 
 # -------------------------------------------------- Opciones de agregar y modificar --------------------------------------------------
 

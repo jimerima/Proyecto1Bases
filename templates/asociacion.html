@@ -1,13 +1,25 @@
 {% extends "base.html" %}
+
 {% block titulo %}Asociación · Clubes de Lectura{% endblock %}
+
 {% block contenido %}
-  <div class="hero" style="text-align:center">
-    <div class="col" style="margin:auto">
-      <div class="eyebrow">Sección</div>
+  <div class="hero" style="text-align:center; padding-top: 2rem;">
+    <div class="col" style="margin:auto; max-width:640px;">
+      <div class="eyebrow" style="font-weight: bold; color: #000;">Sección</div>
       <h1>Asociación</h1>
-      <p class="lead">Página en blanco (pendiente de implementar).</p>
-      <div class="actions" style="justify-content:center">
-        <a class="btn" href="{{ url_for('pagina_principal') }}">Volver a la página principal</a>
+      <p class="lead" style="margin: 0 auto; max-width: 60ch; text-align: center;" >Seleccione una opción para asociar.</p>
+      
+      <!-- Botones de Asociación -->
+      <div class="actions" style="display: flex; flex-direction: column; justify-content: center; gap: 1rem; margin-top: 2rem;">
+        <a class="btn btn--primary" href="{{ url_for('vista_asociar_persona_a_club') }}" style="text-decoration: none;">👤 Asociar persona a club</a>
+        <a class="btn btn--primary" href="{{ url_for('vista_asociar_persona_a_libro') }}" style="text-decoration: none;">📖 Asociar persona a libro</a>
+        <a class="btn btn--primary" href="{{ url_for('vista_asociar_club_a_libro') }}" style="text-decoration: none;">📚 Asociar club a libro</a>
+        <a class="btn btn--primary" href="{{ url_for('vista_asociar_autor_a_libro') }}" style="text-decoration: none;">✍️ Asociar autor a libro</a>
+      </div>
+
+      <!-- Botón para volver a la página principal -->
+      <div class="actions" style="justify-content:center; margin-top: 2rem;">
+        <a class="btn btn--secondary" href="{{ url_for('pagina_principal') }}" style="text-decoration: none; background-color: #e0e0e0; color: #000;">⬅ Volver a la página principal</a>
       </div>
     </div>
   </div>
