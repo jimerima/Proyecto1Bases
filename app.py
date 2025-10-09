@@ -168,6 +168,8 @@ def vista_agregar_libro():
 @app.route("/modificarLibro", methods=["GET"])
 def vista_modificar_libro():    
     libros = listar_libros(driver)
+    if libros is None:
+        libros = {}
     return render_template("modificarLibro.html", libros=libros)
 
 # -------------------------------------------------- Opciones de agregar y modificar --------------------------------------------------
@@ -244,14 +246,6 @@ def modificar_autor():
 # Agregar libro
 @app.route("/agregarLibro", methods=["GET", "POST"])
 def agregar_libro():
-    autores = listar_autores(driver) 
-    nuevo_id = generar_id_libro(driver) 
-    
-    context = {
-        "autores": autores, 
-        "nuevo_id": nuevo_id,
-    }
-
     if request.method == "POST":
         lId = generar_id_libro(driver) 
         lTitulo = request.form.get("titulo")
@@ -263,7 +257,7 @@ def agregar_libro():
         flash("Libro agregado correctamente con ID: " + str(lId), "success")
         return redirect(url_for("vista_libros"))
 
-    return render_template("agregarLibro.html", **context)
+    return render_template("agregarLibro.html", nuevo_id=lId)
 
 # Modificar libro
 @app.route("/modificarLibro", methods=["GET", "POST"])
