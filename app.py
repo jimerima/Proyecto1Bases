@@ -1,15 +1,25 @@
+######################################################################
+# Proyecto 1 - Bases de Datos Avanzadas                              #
+# Integrantes:                                                       #
+# María Jimena Rivera Madrigal (2023066336)                          #
+#
+#
+######################################################################
+
 from flask import Flask, render_template, request, redirect, url_for, flash
 from persona import *
-from autor import add_autor, get_autor, update_autor, add_autores
-from club import add_club, get_club, update_club, add_clubs
-from libro import add_libro, get_libro, update_libro, add_libros
-from membresia import add_membresia, add_membresias
-from autoria import add_autoria, add_autorias
-from lectura import add_lectura, add_lecturas
-from recomendacion import add_recomendacion, add_recomendaciones
+from autor import *
+from club import *
+from libro import *
+from membresia import *
+from autoria import *
+from lectura import *
+from recomendacion import *
 from neo4j import GraphDatabase
 import csv
 import io
+
+#------------------------- Configuración de Flask y Neo4j -------------------------
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -30,7 +40,7 @@ def initialize_db(driver):
         session.run("CREATE CONSTRAINT libro_id_unique IF NOT EXISTS FOR (l:Libro) REQUIRE l.idLibro IS UNIQUE")
 
 
-# ------------------------- RUTAS -------------------------
+# -------------------------------------------------- Rutas --------------------------------------------------
 
 @app.route("/")
 def index():
@@ -103,6 +113,7 @@ def ruta_cargar_datos():
 
     return redirect(url_for("pagina_principal")) 
 
+#------------------------- HTML -------------------------
 
 @app.route("/PaginaPrincipal")
 def pagina_principal():
@@ -141,10 +152,19 @@ def vista_modificar_persona():
     personas = listar_personas(driver)
     return render_template("modificarPersona.html", personas=personas)
 
-# ------------------------- Opciones de agregar y modificar -------------------------
+@app.route("/agregarAutor")
+def vista_agregar_autor():
+    return render_template("agregarAutor.html")
 
-# PERSONA
-# agregar persona
+@app.route("/modificarAutor", methods=["GET"])
+def vista_modificar_autor():
+    autores = listar_autores(driver)
+    return render_template("modificarAutor.html", autores=autores)
+
+# -------------------------------------------------- Opciones de agregar y modificar --------------------------------------------------
+
+# ------------------------- Persona -------------------------
+# Agregar persona
 @app.route("/agregarPersona", methods=["GET", "POST"])
 def agregar_persona():
     if request.method == "POST":
@@ -161,9 +181,7 @@ def agregar_persona():
     
     return render_template("agregarPersona.html", nuevo_id=nuevo_id)
 
-# modificar persona
-# In c:\Users\mj30\OneDrive\Escritorio\GitHub\Proyecto1Bases\app.py
-
+# Modificar persona
 @app.route("/modificarPersona", methods=["GET", "POST"])
 def modificar_persona():
     if request.method == "POST":
@@ -179,10 +197,77 @@ def modificar_persona():
     personas = listar_personas(driver)
     return render_template("modificarPersona.html", personas=personas) 
 
-# Autores
-# agregar autor
+# ------------------------- Autores -------------------------
+# Agregar autor
+@app.route("/agregarAutor", methods=["GET", "POST"])
+def agregar_autor():
+    if request.method == "POST":
+        aId = generar_id_autor(driver) 
+        aNombre = request.form.get("nombre")
+        aNacionalidad = request.form.get("nacionalidad")
+        
+        add_autor(driver, aId, aNombre, aNacionalidad)
+        
+        flash("Autor agregado correctamente con ID: " + aId, "success")
+        return redirect(url_for("vista_autores"))
+    
+    nuevo_id = generar_id_autor(driver)
+    
+    return render_template("agregarAutor.html", nuevo_id=nuevo_id)
+
+# Modificar autor
+@app.route("/modificarAutor", methods=["GET", "POST"])
+def modificar_autor():
+    if request.method == "POST":
+        aId = request.form.get("id")
+        aNombre = request.form.get("nombre")
+        aNacionalidad = request.form.get("nacionalidad")
+        
+        update_autor(driver, aId, aNombre, aNacionalidad)
+        
+        flash("Autor modificado correctamente con ID: " + aId, "success")
+        return redirect(url_for("vista_autores"))
+    
+    autores = listar_autores(driver)
+    return render_template("modificarAutor.html", autores=autores)
+
+#------------------------- Libros -------------------------
+# Agregar libro
+@app.route("/agregarLibro", methods=["GET", "POST"])
+def agregar_libro():
+    if request.method == "POST":
+        lId = generar_id_libro(driver) 
+        lTitulo = request.form.get("titulo")
+        lGenero = request.form.get("genero")
+        lAnioPublicacion = request.form.get("anio_publicacion")
+        
+        add_libro(driver, lId, lTitulo, lGenero, lAnioPublicacion)
+        
+        flash("Libro agregado correctamente con ID: " + lId, "success")
+        return redirect(url_for("vista_libros"))
+    
+    nuevo_id = generar_id_libro(driver)
+    
+    return render_template("agregarLibro.html", nuevo_id=nuevo_id)
+
+# Modificar libro
+@app.route("/modificarLibro", methods=["GET", "POST"])
+def modificar_libro():
+    if request.method == "POST":
+        lId = request.form.get("id")
+        lTitulo = request.form.get("titulo")
+        lGenero = request.form.get("genero")
+        lAnioPublicacion = request.form.get("anio_publicacion")
+        
+        update_libro(driver, lId, lTitulo, lGenero, lAnioPublicacion)
+        
+        flash("Libro modificado correctamente con ID: " + lId, "success")
+        return redirect(url_for("vista_libros"))
+    
+    libros = listar_libros(driver)
+    return render_template("modificarLibro.html", libros=libros)
 
 
-# ================== MAIN ==================
+#-------------------------------------------------- MAIN --------------------------------------------------
 if __name__ == "__main__":
     app.run(debug=True)

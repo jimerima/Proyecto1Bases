@@ -47,7 +47,6 @@ def listar_personas(driver):
     try:
         records = query_result.records
     except AttributeError:
-
         records = query_result 
 
     personas = {}
