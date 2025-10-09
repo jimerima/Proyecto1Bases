@@ -1,61 +1,62 @@
 {% extends "base.html" %}
+
 {% block titulo %}Modificar libro · Clubes de Lectura{% endblock %}
+
 {% block contenido %}
-  <div class="hero" style="text-align:center">
-    <div class="col" style="margin:auto; max-width:640px">
-      <div class="eyebrow">Libros</div>
-      <h1>Modificar libro</h1>
-      <p class="lead">Selecciona el libro a editar y actualiza los campos.</p>
+  <div class="hero" style="text-align:center; padding-top: 2rem;">
+    <div class="col" style="margin:auto; max-width:640px; text-align:left;">
+      <div class="eyebrow" style="font-weight: bold; color: #000;">Libros</div>
+      <h1 style="font-size: 2.5rem; color: #000; margin-top: 0.5rem;">Modificar libro</h1>
+      <p class="lead" style="text-align: center; font-size: 1.2rem; margin-bottom: 1.5rem; color: #000;">Selecciona el libro a editar y actualiza los campos.</p>
 
-      <form action="{{ url_for('modificar_libro') }}" method="post" style="margin-top:1rem; text-align:left">
-        
-                <div class="form-control">
-          <label for="libro_id">Seleccionar Libro (ID | Título)</label>
-          <select name="id" id="libro_id" required>
-                <option value="">-- Seleccione un libro a modificar --</option>
-                {# 'libros' es un diccionario {idLibro: {titulo: 'X', ...}} #}
-                {% for id, data in libros.items() %}
-                <option value="{{ id }}">{{ id }} | {{ data.titulo }}</option>
-                {% endfor %}
-          </select>
-        </div>
+      <form action="{{ url_for('modificar_libro') }}" method="post" style="margin-top: 1.5rem;">
 
-                <div class="form-control">
-          <label>Nuevo Título</label>
-          <input type="text" name="titulo" required placeholder="Título (Obligatorio)" />
-        </div>
-        
-                <div class="form-control">
-          <label>Nuevo Género</label>
-          <select name="genero" required>
-                <option value="">-- Seleccione nuevo Género --</option>
-                <option value="Ficción">Ficción</option>
-                <option value="Misterio">Misterio</option>
-                <option value="Ciencia Ficción">Ciencia Ficción</option>
-                <option value="Fantasía">Fantasía</option>
-                <option value="Romance">Romance</option>
-                <option value="Thriller">Thriller</option>
-                <option value="Historia">Historia</option>
-                <option value="Biografía">Biografía</option>
-                <option value="Ensayo">Ensayo</option>
-                <option value="Poesía">Poesía</option>
-          </select>
-        </div>
-        
-                <div class="form-control">
-          <label>Nuevo Año de Publicación</label>
-          <input type="number" name="anno" required min="1000" placeholder="Ej: 2024" />
-        </div>
-        
-                <div class="actions" style="justify-content:flex-end; gap:.5rem; margin-top:1rem">
-          <a class="btn" href="{{ url_for('vista_libros') }}">⬅ Cancelar</a>
-          <button class="btn btn--primary" type="submit">💾 Guardar cambios</button>
-        </div>
-      </form>
+        <!-- Seleccionar libro -->
+        <div class="form-control" style="margin-bottom: 1.5rem;">
+          <label for="libro_id" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Seleccionar Libro (ID | Título)</label>
+          <select name="id" id="libro_id" required style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
+            <option value="">-- Seleccione un libro a modificar --</option>
+            {% for id, data in libros.items() %}
+              <option value="{{ id }}">{{ id }} | {{ data.titulo }}</option>
+            {% endfor %}
+          </select>
+        </div>
 
-      <div class="actions" style="justify-content:center; margin-top:1rem">
-        <a class="btn" href="{{ url_for('vista_libros') }}">⬅ Volver a Libros</a>
-      </div>
-    </div>
-  </div>
+        <!-- Nuevo Título -->
+        <div class="form-control" style="margin-bottom: 1.5rem;">
+          <label for="titulo" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Nuevo Título</label>
+          <input type="text" name="titulo" id="titulo" required placeholder="Título (Obligatorio)" style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
+        </div>
+
+        <!-- Nuevo Género -->
+        <div class="form-control" style="margin-bottom: 1.5rem;">
+          <label for="genero" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Nuevo Género</label>
+          <select name="genero" id="genero" required style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
+            <option value="">-- Seleccionar nuevo Género --</option>
+            <option value="Ficción">Ficción</option>
+            <option value="Misterio">Misterio</option>
+            <option value="Ciencia Ficción">Ciencia Ficción</option>
+            <option value="Fantasía">Fantasía</option>
+            <option value="Romance">Romance</option>
+            <option value="Thriller">Thriller</option>
+            <option value="Historia">Historia</option>
+            <option value="Biografía">Biografía</option>
+            <option value="Ensayo">Ensayo</option>
+            <option value="Poesía">Poesía</option>
+          </select>
+        </div>
+
+        <!-- Nuevo Año de Publicación -->
+        <div class="form-control" style="margin-bottom: 1.5rem;">
+          <label for="anno" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Nuevo Año de Publicación</label>
+          <input type="number" name="anno" id="anno" required min="1000" placeholder="Ej: 2024" style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="actions" style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem;">
+          <a class="btn btn--secondary" href="{{ url_for('vista_libros') }}" style="text-decoration: none; background-color: #e0e0e0; color: #000;">⬅ Cancelar</a>
+          <button class="btn btn--primary" type="submit" style="padding: 0.8rem 2rem; font-size: 1rem; border-radius: 10px; background-color: #000; color: #000;">💾 Guardar cambios</button>
+        </div>
+      </form>
+
 {% endblock %}

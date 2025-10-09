@@ -1,16 +1,20 @@
 {% extends "base.html" %}
+
 {% block titulo %}Persona · Clubes de Lectura{% endblock %}
+
 {% block contenido %}
-  <div class="hero" style="text-align:center">
-    <div class="col" style="margin:auto">
+  <div class="hero" style="text-align:center; margin-top:2rem;">
+    <div class="col" style="margin:auto; text-align:center;">
       <div class="eyebrow">Sección</div>
       <h1>Persona</h1>
-      <p class="lead" style="text-align: center; ">Gestiona la información de una persona."</p>
+      <p class="lead" style="margin: 0 auto; max-width: 60ch; text-align: center;">
+        Seleccione una opción para gestionar una persona.
+      </p>
 
-      <div class="actions" style="justify-content:center; gap:.5rem; margin-top:1rem">
-        <a class="btn" href="{{ url_for('vista_agregar_persona') }}">➕ Agregar</a>
-        <a class="btn" href="{{ url_for('vista_modificar_persona') }}">✏️ Modificar</a>
-        <a class="btn" href="{{ url_for('pagina_principal') }}">⬅ Volver a Página principal</a>
+      <div class="actions" style="display:flex; justify-content:center; gap:1rem; margin-top:2rem;">
+        <a class="btn btn--primary" href="{{ url_for('vista_agregar_persona') }}">➕ Agregar</a>
+        <a class="btn btn--primary" href="{{ url_for('vista_modificar_persona') }}">✏️ Modificar</a>
+        <a class="btn btn--primary" href="{{ url_for('pagina_principal') }}">⬅ Volver a Página principal</a>
       </div>
     </div>
   </div>

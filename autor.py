@@ -76,6 +76,8 @@ def generar_id_autor(driver):
     except AttributeError:
         records = query_result 
 
+    ultimo_id = 0
+
     try:
         ultimo_id = records[0][0]  
         nuevo_id = ultimo_id + 1

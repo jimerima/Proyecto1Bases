@@ -1,61 +1,59 @@
 {% extends "base.html" %}
+
 {% block titulo %}Agregar autor · Clubes de Lectura{% endblock %}
+
 {% block contenido %}
-  <div class="hero" style="text-align:center">
-    <div class="col" style="margin:auto; max-width:640px">
-      <div class="eyebrow">Autores</div>
-      <h1>Agregar autor</h1>
-      <p class="lead">Completa los datos y guarda los cambios.</p>
+  <div class="hero" style="text-align:center; padding-top: 2rem;">
+    <div class="col" style="margin:auto; max-width:640px; text-align:left;">
+      <div class="eyebrow" style="font-weight: bold; color: #000;">Autores</div>
+      <h1 style="font-size: 2.5rem; color: #000; margin-top: 0.5rem;">Agregar autor</h1>
+      <p class="lead" style="text-align: center; font-size: 1.2rem; margin-bottom: 1.5rem; color: #000;">Completa los datos y guarda los cambios.</p>
 
-      <form action="{{ url_for('agregar_autor') }}" method="post" style="margin-top:1rem; text-align:left">
-        
-        <div class="form-control">
-          <label>Nombre</label>
-          <input type="text" name="nombre" required />
-        </div>
-        
-        <div class="form-control">
-          <label>Nacionalidad</label>
-          <select name="nacionalidad" required>
-                <option value="">-- Seleccionar Nacionalidad --</option>
-                                <option value="Alemán">Alemán</option>
-                <option value="Argentino">Argentino</option>
-                <option value="Brasileño">Brasileño</option>
-                <option value="Canadiense">Canadiense</option>
-                <option value="Chileno">Chileno</option>
-                <option value="Chino">Chino</option>
-                <option value="Colombiano">Colombiano</option>
-                <option value="Surcoreano">Surcoreano</option>
-                <option value="Costarricense">Costarricense</option>
-                <option value="Cubano">Cubano</option>
-                <option value="Ecuatoriano">Ecuatoriano</option>
-                <option value="Egipcio">Egipcio</option>
-                <option value="Español">Español</option>
-                <option value="Estadounidense">Estadounidense</option>
-                <option value="Francés">Francés</option>
-                <option value="Indio">Indio</option>
-                <option value="Italiano">Italiano</option>
-                <option value="Japonés">Japonés</option>
-                <option value="Mexicano">Mexicano</option>
-                <option value="Nigeriano">Nigeriano</option>
-                <option value="Peruano">Peruano</option>
-                <option value="Británico">Británico</option>
-                <option value="Ruso">Ruso</option>
-                <option value="Sudafricano">Sudafricano</option>
-                <option value="Uruguayo">Uruguayo</option>
-                <option value="Venezolano">Venezolano</option>
-          </select>
-        </div>
+      <form action="{{ url_for('agregar_autor') }}" method="post" style="margin-top: 1.5rem;">
 
-        <div class="actions" style="justify-content:flex-end; gap:.5rem; margin-top:1rem">
-          <a class="btn" href="{{ url_for('vista_autores') }}">⬅ Cancelar</a>
-          <button class="btn" type="submit">💾 Guardar</button>
-        </div>
-      </form>
+        <div class="form-control" style="margin-bottom: 1.5rem;">
+          <label for="nombre" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Nombre</label>
+          <input type="text" name="nombre" id="nombre" required placeholder="Ingrese el nombre completo" style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
+        </div>
 
-      <div class="actions" style="justify-content:center; margin-top:1rem">
-        <a class="btn" href="{{ url_for('vista_autores') }}">⬅ Volver a Autores</a>
-      </div>
-    </div>
-  </div>
+        <div class="form-control" style="margin-bottom: 1.5rem;">
+          <label for="nacionalidad" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Nacionalidad</label>
+          <select name="nacionalidad" id="nacionalidad" required style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
+            <option value="">-- Seleccionar Nacionalidad --</option>
+            <option value="Alemán">Alemán</option>
+            <option value="Argentino">Argentino</option>
+            <option value="Brasileño">Brasileño</option>
+            <option value="Canadiense">Canadiense</option>
+            <option value="Chileno">Chileno</option>
+            <option value="Chino">Chino</option>
+            <option value="Colombiano">Colombiano</option>
+            <option value="Surcoreano">Surcoreano</option>
+            <option value="Costarricense">Costarricense</option>
+            <option value="Cubano">Cubano</option>
+            <option value="Ecuatoriano">Ecuatoriano</option>
+            <option value="Egipcio">Egipcio</option>
+            <option value="Español">Español</option>
+            <option value="Estadounidense">Estadounidense</option>
+            <option value="Francés">Francés</option>
+            <option value="Indio">Indio</option>
+            <option value="Italiano">Italiano</option>
+            <option value="Japonés">Japonés</option>
+            <option value="Mexicano">Mexicano</option>
+            <option value="Nigeriano">Nigeriano</option>
+            <option value="Peruano">Peruano</option>
+            <option value="Británico">Británico</option>
+            <option value="Ruso">Ruso</option>
+            <option value="Sudafricano">Sudafricano</option>
+            <option value="Uruguayo">Uruguayo</option>
+            <option value="Venezolano">Venezolano</option>
+          </select>
+        </div>
+
+        <div class="actions" style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem;">
+          <a class="btn btn--secondary" href="{{ url_for('vista_autores') }}" style="text-decoration: none; background-color: #e0e0e0; color: #000;">⬅ Cancelar</a>
+          <button class="btn btn--primary" type="submit" style="padding: 0.8rem 2rem; font-size: 1rem; border-radius: 10px; background-color: #000; color: #000;">💾 Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
 {% endblock %}
