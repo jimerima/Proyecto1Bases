@@ -1,48 +1,50 @@
 {% extends "base.html" %}
+
 {% block titulo %}Modificar persona · Clubes de Lectura{% endblock %}
+
 {% block contenido %}
-  <div class="hero" style="text-align:center">
-    <div class="col" style="margin:auto; max-width:720px">
-      <div class="eyebrow">Persona</div>
-      <h1>Modificar persona</h1>
-      <p class="lead">Indica el ID y actualiza los campos necesarios.</p>
+  <div class="hero" style="text-align:center">
+    <div class="col" style="margin:auto; max-width:720px">
+      <div class="eyebrow">Persona</div>
+      <h1>Modificar persona</h1>
+      <p class="lead">Selecciona la persona y actualiza su nombre/tipo de lector.</p>
 
-      <form action="{{ url_for('vista_modificar_persona') }}" method="post" style="margin-top:1rem; text-align:left">
-        <div class="form-control">
-          <label>ID de la persona</label>
-          <input type="text" name="id_persona" placeholder="Ej: P001" required />
-        </div>
+      <form action="{{ url_for('modificar_persona') }}" method="post" style="margin-top:1rem; text-align:left">
+        
+                <div class="form-control">
+          <label for="persona_id">Seleccionar Persona (ID | Nombre)</label>
+          <select name="id" id="persona_id" required>
+                <option value="">-- Seleccione una persona --</option>
+                {# 'personas' es un diccionario {id: {nombre: 'X', tipo_lector: 'Y'}} #}
+                {% for id, data in personas.items() %}
+                <option value="{{ id }}">{{ id }} | {{ data.nombre }}</option>
+                {% endfor %}
+          </select>
+        </div>
 
-        <div class="form-control">
-          <label>Nombre</label>
-          <input type="text" name="nombre" />
-        </div>
-        <div class="form-control">
-          <label>Apellidos</label>
-          <input type="text" name="apellidos" />
-        </div>
-        <div class="form-control">
-          <label>Correo</label>
-          <input type="email" name="correo" />
-        </div>
-        <div class="form-control">
-          <label>Teléfono</label>
-          <input type="tel" name="telefono" />
-        </div>
-        <div class="form-control">
-          <label>Fecha de nacimiento</label>
-          <input type="date" name="fecha_nacimiento" />
-        </div>
+                <div class="form-control">
+          <label for="nuevo_nombre">Nuevo Nombre</label>
+          <input type="text" name="nombre" id="nuevo_nombre" required placeholder="Ingrese el nuevo nombre completo" />
+        </div>
+        
+                <div class="form-control">
+          <label for="nuevo_tipo">Nuevo Tipo de lector</label>
+          <select name="tipo_lector" id="nuevo_tipo" required>
+            <option value="">-- Seleccione el nuevo tipo --</option>
+            <option value="casual">Casual</option>
+            <option value="frecuente">Frecuente</option>
+          </select>
+        </div>
 
-        <div class="actions" style="justify-content:flex-end; gap:.5rem; margin-top:1rem">
-          <a class="btn" href="{{ url_for('vista_persona') }}">⬅ Cancelar</a>
-          <button class="btn btn--primary" type="submit">💾 Guardar cambios</button>
-        </div>
-      </form>
+        <div class="actions" style="justify-content:flex-end; gap:.5rem; margin-top:1rem">
+          <a class="btn" href="{{ url_for('vista_persona') }}">⬅ Cancelar</a>
+          <button class="btn btn--primary" type="submit">💾 Guardar cambios</button>
+        </div>
+      </form>
 
-      <div class="actions" style="justify-content:center; margin-top:1rem">
-        <a class="btn" href="{{ url_for('vista_persona') }}">⬅ Volver a Persona</a>
-      </div>
-    </div>
-  </div>
+      <div class="actions" style="justify-content:center; margin-top:1rem">
+        <a class="btn" href="{{ url_for('vista_persona') }}">⬅ Volver a Persona</a>
+      </div>
+    </div>
+  </div>
 {% endblock %}

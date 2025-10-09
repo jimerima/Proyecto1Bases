@@ -9,14 +9,16 @@ def get_persona(driver, pId):
 
 
 def update_persona(driver, pId, pNombre, pTipoLector):
-    if get_persona(driver, pId) is None:
-        print(f"No se puede actualizar. No se encontró la persona con id {pId}.")
-        return
-    driver.execute_query(
-        "MATCH (p:Persona {id: $idPersona}) "
-        "SET p.Nombre = $Nombre, p.TipoLector = $TipoLector",
-        idPersona = int(pId), Nombre = pNombre, TipoLector = pTipoLector
-    )
+    query = """
+    MATCH (p:Persona {id: $idPersona})
+    SET p.Nombre = $Nombre, p.TipoLector = $TipoLector
+    """
+    params = {
+        "idPersona": int(pId),
+        "Nombre": pNombre,
+        "TipoLector": pTipoLector
+    }
+    driver.execute_query(query, params)
     
 
 def add_persona(driver, pId, pNombre, pTipoLector):

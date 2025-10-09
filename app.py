@@ -136,14 +136,15 @@ def vista_persona():
 def vista_agregar_persona():
     return render_template("agregarPersona.html")
 
-@app.route("/modificarPersona")
+@app.route("/modificarPersona", methods=["GET"])
 def vista_modificar_persona():
-    return render_template("vista_modificar_persona.html")
+    personas = listar_personas(driver)
+    return render_template("modificarPersona.html", personas=personas)
 
 # ------------------------- Opciones de agregar y modificar -------------------------
 
 # PERSONA
-
+# agregar persona
 @app.route("/agregarPersona", methods=["GET", "POST"])
 def agregar_persona():
     if request.method == "POST":
@@ -159,6 +160,28 @@ def agregar_persona():
     nuevo_id = generar_id_persona(driver)
     
     return render_template("agregarPersona.html", nuevo_id=nuevo_id)
+
+# modificar persona
+# In c:\Users\mj30\OneDrive\Escritorio\GitHub\Proyecto1Bases\app.py
+
+@app.route("/modificarPersona", methods=["GET", "POST"])
+def modificar_persona():
+    if request.method == "POST":
+        pId = request.form.get("id")
+        pNombre = request.form.get("nombre")
+        pTipoLector = request.form.get("tipo_lector")
+        
+        update_persona(driver, pId, pNombre, pTipoLector)
+        
+        flash("Persona modificada correctamente con ID: " + pId, "success")
+        return redirect(url_for("vista_persona"))
+    
+    personas = listar_personas(driver)
+    return render_template("modificarPersona.html", personas=personas) 
+
+# Autores
+# agregar autor
+
 
 # ================== MAIN ==================
 if __name__ == "__main__":
