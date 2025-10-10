@@ -13,13 +13,19 @@
 
         <!-- Seleccionar Club -->
         <div class="form-control" style="margin-bottom: 1.5rem;">
-          <label for="club_id" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Seleccionar Club (ID | Ubicación)</label>
+          <label for="club_id" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Seleccionar Club (ID | Nombre)</label>
           <select name="id" id="club_id" required style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
             <option value="">-- Seleccione un club a modificar --</option>
             {% for id, data in clubes.items() %}
-              <option value="{{ id }}">{{ id }} | {{ data.ubicacion }}</option>
+              <option value="{{ id }}">{{ id }} | {{ data.nombre }}</option>
             {% endfor %}
           </select>
+        </div>
+
+        <!-- Nueva Nombre -->
+        <div class="form-control" style="margin-bottom: 1.5rem;">
+          <label for="nombre" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Nuevo Nombre del Club</label>
+          <input type="text" name="nombre" id="nombre" required placeholder="Nombre (Obligatorio)" style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
         </div>
 
         <!-- Nueva Ubicación -->

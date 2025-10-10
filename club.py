@@ -7,25 +7,27 @@ def get_club(driver, pIdClub):
         return None
     return result.records[0].data()["c"]
 
-def update_club(driver, pIdClub, pUbicacion, pTematica):
+def update_club(driver, pIdClub, pNombre, pUbicacion, pTematica):
     query = """
     MATCH (c:Club {idClub: $idClub})
-    SET c.Ubicacion = $Ubicacion, c.Tematica = $Tematica
+    SET c.Nombre = $Nombre, c.Ubicacion = $Ubicacion, c.Tematica = $Tematica
     """
     params = {
         "idClub": int(pIdClub),
+        "Nombre": pNombre,
         "Ubicacion": pUbicacion,
         "Tematica": pTematica
     }
     driver.execute_query(query, params)
 
-def add_club(driver, pIdClub, pUbicacion, pTematica):
+def add_club(driver, pIdClub, pNombre, pUbicacion, pTematica):
     query = (
-        "CREATE (c:Club {idClub: $idClub, Ubicacion: $Ubicacion, Tematica: $Tematica})"
+        "CREATE (c:Club {idClub: $idClub, Nombre: $Nombre, Ubicacion: $Ubicacion, Tematica: $Tematica})"
     )
     
     params = {
         "idClub": int(pIdClub),
+        "Nombre": pNombre,
         "Ubicacion": pUbicacion,
         "Tematica": pTematica
     }
@@ -34,12 +36,12 @@ def add_club(driver, pIdClub, pUbicacion, pTematica):
 
 def add_clubs(driver, pListaClubs):
     for club in pListaClubs:
-        add_club(driver, club["idClub"], club["Ubicacion"], club["Tematica"])
-        print("Club añadido:", club["Ubicacion"])
+        add_club(driver, club["idClub"], club["Nombre"], club["Ubicacion"], club["Tematica"])
+        print("Club añadido:", club["Nombre"])
 
 def listar_clubs(driver):
     query_result = driver.execute_query(
-        "MATCH (c:Club) RETURN c.idClub AS idClub, c.Ubicacion AS ubicacion, c.Tematica AS tematica"
+        "MATCH (c:Club) RETURN c.idClub AS idClub, c.Nombre AS nombre, c.Ubicacion AS ubicacion, c.Tematica AS tematica"
     )
     
     try:
@@ -52,12 +54,13 @@ def listar_clubs(driver):
     for record in records:
         try:
             club_id = record[0] 
-            ubicacion = record[1]
-            tematica = record[2]
-            
+            nombre = record[1]
+            ubicacion = record[2]
+            tematica = record[3]
             clubs[club_id] = {
                 "idClub": club_id,
-                "ubicacion": ubicacion,        
+                "nombre": nombre,
+                "ubicacion": ubicacion,
                 "tematica": tematica 
             }
         except (KeyError, IndexError) as e:

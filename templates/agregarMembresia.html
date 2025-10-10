@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block titulo %}Agregar membresía · Clubes de Lectura{% endblock %}
+
+{% block contenido %}
+  <div class="hero" style="text-align:center; padding-top: 2rem;">
+    <div class="col" style="margin:auto; max-width:820px; text-align:left;">
+      <div class="eyebrow" style="font-weight: bold; color: #000;">Membresías</div>
+      <h1>Agregar membresía</h1>
+      <p class="lead" style="text-align: center; font-size: 1.1rem; margin-bottom: 1.25rem; color:#000;">
+        Selecciona a la persona y marca uno o varios clubes.
+      </p>
+
+      <form action="{{ url_for('agregar_membresia') }}" method="post" style="margin-top: 1rem;">
+
+        <!-- Persona (selección única) -->
+        <div class="form-control" style="margin-bottom: 1.25rem;">
+          <label for="persona_id" style="font-weight: 600; margin-bottom: .5rem; color:#000;">Persona</label>
+          <select name="id" id="persona_id" required
+                  style="width: 100%; padding: .8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
+            <option value="">-- Seleccionar persona --</option>
+            {# Espera un dict personas de tipo {id: {nombre, tipo_lector}} #}
+            {% for id, data in personas.items() %}
+              <option value="{{ id }}">{{ id }} — {{ data.nombre }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Clubes (múltiple con checkboxes) -->
+        <div class="form-control" style="margin-bottom: 1.25rem;">
+          <label style="font-weight: 600; margin-bottom: .5rem; color:#000;">Clubes</label>
+
+          <div id="listaClubs"
+               style="max-height: 300px; overflow:auto; padding:.25rem .5rem; border:1px solid #ccc; border-radius:10px; background:#fff;">
+            {# Espera un dict clubs de tipo {id: {nombre, ubicacion, tematica}} #}
+            {% for id, data in clubs.items() %}
+              <label class="chk" style="display:block; margin-bottom:.25rem; cursor:pointer; color:#000;">
+                <input type="checkbox" name="club_ids" value="{{ id }}" style="margin-right:.5rem;">
+                <span>{{ id }} — {{ data.nombre }} ({{ data.ubicacion }})</span>
+              </label>
+            {% endfor %}
+            {% if clubs|length == 0 %}
+              <div style="padding:.6rem; color:#555;">No hay clubes disponibles.</div>
+            {% endif %}
+          </div>
+
+          <small style="display:block; margin-top:.5rem; color:#000;">
+            Puedes marcar uno o varios clubes.
+          </small>
+        </div>
+
+        <!-- Acciones -->
+        <div class="actions" style="display:flex; justify-content:flex-end; gap: .8rem; margin-top: 1.25rem;">
+          <a class="btn btn--secondary" href="{{ url_for('pagina_principal') }}"
+             style="text-decoration:none; background-color:#e0e0e0; color:#000;">⬅ Volver</a>
+          <button class="btn btn--primary" type="submit"
+                  style="padding:.8rem 1.6rem; font-size:1rem; border-radius:10px;">💾 Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

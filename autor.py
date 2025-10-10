@@ -39,8 +39,8 @@ def add_autores(driver, pListaAutores):
 
 def listar_autores(driver):
     query_result = driver.execute_query(
-        "MATCH (a:Autor) RETURN a.idAutor AS idAutor, a.Nombre AS nombre, a.Nacionalidad AS nacionalidad"
-    )
+    "MATCH (a:Autor) RETURN a.idAutor AS idAutor, a.Nombre AS nombre, a.Nacionalidad AS nacionalidad ORDER BY a.idAutor"
+    )   
     
     try:
         records = query_result.records
@@ -63,7 +63,7 @@ def listar_autores(driver):
         except (KeyError, IndexError) as e:
             autor_str = str(autor_id) if 'autor_id' in locals() else 'N/A'
             print(f"Error al procesar el registro con ID {autor_str}: {e}")
-            
+    print("autores:", autores)
     return autores
 
 def generar_id_autor(driver):

@@ -79,10 +79,10 @@ def ruta_cargar_datos():
             case "Club.csv":            add_clubs(driver, data_list)
             case "Autor.csv":           add_autores(driver, data_list)
             case "Libro.csv":           add_libros(driver, data_list)
-            case "Persona-club.csv":    add_membresias(driver, data_list)
-            case "Autor-libro.csv":     add_autorias(driver, data_list)
+            case "Persona-club.csv":   add_membresias(driver, data_list)
+            case "Autor-libro.csv":    add_autorias(driver, data_list)
             case "Persona-libro.csv":   add_lecturas(driver, data_list)
-            case "Club-libro.csv":      add_recomendaciones(driver, data_list)
+            case "Club-libro.csv":     add_recomendaciones(driver, data_list)
 
     
     for nombre, data_list in parsed:
@@ -189,25 +189,29 @@ def vista_modificar_club():
 
 # Rutas para asociaciones (pendiente de implementar la lógica)
 
-@app.route("/Persona-Club", methods=["GET"])
+@app.route("/agregarMembresia", methods=["GET"])
 def vista_asociar_persona_a_club():
-    # Lógica para la asociación de personas a clubs (pendiente de implementar)
-    return render_template("Persona-Club.html")
+    personas = listar_personas(driver)
+    clubs = listar_clubs(driver)
+    return render_template("agregarMembresia.html", personas=personas, clubs=clubs)
 
-@app.route("/Persona-Libro", methods=["GET"])
+@app.route("/agregarLectura", methods=["GET"])
 def vista_asociar_persona_a_libro():
-    # Lógica para la asociación de personas a libros (pendiente de implementar)
-    return render_template("Persona-Libro.html")
+    personas = listar_personas(driver)
+    libros = listar_libros(driver)
+    return render_template("agregarLectura.html", personas=personas, libros=libros)
 
-@app.route("/Club-Libro", methods=["GET"])
+@app.route("/agregarRecomendacion", methods=["GET"])
 def vista_asociar_club_a_libro():
-    # Lógica para la asociación de clubes a libros (pendiente de implementar)
-    return render_template("Club-Libro.html")
+    clubs = listar_clubs(driver)
+    libros = listar_libros(driver)
+    return render_template("agregarRecomendacion.html", clubs=clubs, libros=libros)
 
-@app.route("/Autor-Libro", methods=["GET"])
+@app.route("/agregarAutoria", methods=["GET"])
 def vista_asociar_autor_a_libro():
-    # Lógica para la asociación de autores a libros (pendiente de implementar)
-    return render_template("Autor-Libro.html")
+    autores = listar_autores(driver)
+    libros = listar_libros(driver)
+    return render_template("agregarAutoria.html", autores=autores, libros=libros)
 
 # Rutas para consultas (pendiente de implementar la lógica)
 
@@ -269,8 +273,7 @@ def modificar_persona():
         flash("Persona modificada correctamente con ID: " + pId, "success")
         return redirect(url_for("vista_persona"))
     
-    personas = listar_personas(driver)
-    return render_template("modificarPersona.html", personas=personas) 
+    return vista_modificar_persona()
 
 # ------------------------- Autores -------------------------
 # Agregar autor
@@ -347,9 +350,10 @@ def modificar_libro():
 def agregar_club():
     if request.method == "POST":
         cId = generar_id_club(driver) 
+        cNombre = request.form.get("nombre")
         cUbicacion = request.form.get("ubicacion") 
         cTematica = request.form.get("tematica")     
-        add_club(driver, cId, cUbicacion, cTematica) 
+        add_club(driver, cId, cNombre, cUbicacion, cTematica) 
         
         flash("Club agregado correctamente con ID: " + cId, "success")
         return redirect(url_for("vista_clubes"))
@@ -362,16 +366,74 @@ def agregar_club():
 def modificar_club():
     if request.method == "POST":
         cId = request.form.get("id")
+        cNombre = request.form.get("nombre")
         cUbicacion = request.form.get("ubicacion")
         cTematica = request.form.get("tematica")
-        
-        update_club(driver, cId, cUbicacion, cTematica)
-        
+
+        update_club(driver, cId, cNombre, cUbicacion, cTematica)
+
         flash("Club modificado correctamente con ID: " + cId, "success")
         return redirect(url_for("vista_clubes"))
     
     clubes = listar_clubs(driver)
     return render_template("modificarClub.html", clubes=clubes)
+
+
+##-------------------------Membresias-------------------------
+# Agregar membresia
+@app.route("/agregarMembresia", methods=["GET", "POST"])
+def agregar_membresia():
+    if request.method == "POST":
+        mIdPersona = request.form.get("id")
+        mClubIds = request.form.getlist("club_ids")
+        for club_id in mClubIds:
+            add_membresia(driver, mIdPersona, club_id)
+
+        flash("Membresías agregadas correctamente para la persona con ID: " + mIdPersona, "success")
+        return redirect(url_for("pagina_principal"))
+    return vista_asociar_persona_a_club()
+
+##-------------------------Autorias-------------------------
+# Agregar autoria
+@app.route("/agregarAutoria", methods=["GET", "POST"])
+def agregar_autoria():
+    if request.method == "POST":
+        aIdAutor = request.form.get("id")
+        aLibroIds = request.form.getlist("libro_ids")
+        for libro_id in aLibroIds:
+            add_autoria(driver, aIdAutor, libro_id)
+
+        flash("Autorías agregadas correctamente para el autor con ID: " + aIdAutor, "success")
+        return redirect(url_for("pagina_principal"))
+    return vista_asociar_autor_a_libro()
+
+##-------------------------Lecturas-------------------------
+# Agregar lectura
+@app.route("/agregarLectura", methods=["GET", "POST"])
+def agregar_lectura():
+    if request.method == "POST":
+        lIdPersona = request.form.get("id")
+        lLibroIds = request.form.getlist("libro_ids")
+        for libro_id in lLibroIds:
+            add_lectura(driver, lIdPersona, libro_id)
+
+        flash("Lecturas agregadas correctamente para la persona con ID: " + lIdPersona, "success")
+        return redirect(url_for("pagina_principal"))
+    return vista_asociar_persona_a_libro()
+
+##-------------------------Recomendaciones-------------------------
+# Agregar recomendacion
+@app.route("/agregarRecomendacion", methods=["GET", "POST"])
+def agregar_recomendacion():
+    if request.method == "POST":
+        rIdClub = request.form.get("id")
+        rLibroIds = request.form.getlist("libro_ids")
+        for libro_id in rLibroIds:
+            add_recomendacion(driver, rIdClub, libro_id)
+
+        flash("Recomendaciones agregadas correctamente para el club con ID: " + rIdClub, "success")
+        return redirect(url_for("pagina_principal"))
+    return vista_asociar_club_a_libro()
 
 #-------------------------------------------------- MAIN --------------------------------------------------
 if __name__ == "__main__":
