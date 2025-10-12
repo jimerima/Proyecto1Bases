@@ -7,7 +7,6 @@ def get_persona(driver, pId):
         return None
     return result.records[0].data()["p"]
 
-
 def update_persona(driver, pId, pNombre, pTipoLector):
     query = """
     MATCH (p:Persona {id: $idPersona})
@@ -20,7 +19,6 @@ def update_persona(driver, pId, pNombre, pTipoLector):
     }
     driver.execute_query(query, params)
     
-
 def add_persona(driver, pId, pNombre, pTipoLector):
     query = (
         "CREATE (p:Persona {id: $id, Nombre: $Nombre, TipoLector: $TipoLector})"
@@ -38,10 +36,9 @@ def add_personas(driver, pListaPersonas):
     for persona in pListaPersonas:
         add_persona(driver, persona["id"], persona["Nombre"], persona["TipoLector"])
         
-
 def listar_personas(driver):
     query_result = driver.execute_query(
-        "MATCH (p:Persona) RETURN p.id AS id, p.Nombre AS nombre, p.TipoLector AS tipoLector"
+        "MATCH (p:Persona) RETURN p.id AS id, p.Nombre AS nombre, p.TipoLector AS tipoLector ORDER BY p.id"
     )
     
     try:
@@ -68,7 +65,6 @@ def listar_personas(driver):
         }
     
     return personas
-
 
 def generar_id_persona(driver):
 

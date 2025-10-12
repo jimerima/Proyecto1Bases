@@ -26,4 +26,4 @@ def add_lectura(driver, pIdPersona, pIdLibro):
 def add_lecturas(driver, pListaLecturas):
     for lectura in pListaLecturas:
         add_lectura(driver, lectura["id"], lectura["idLibro"])
-        print("Lectura añadida:", lectura["id"], "-", lectura["idLibro"])
+        

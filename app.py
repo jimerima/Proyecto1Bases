@@ -15,6 +15,7 @@ from membresia import *
 from autoria import *
 from lectura import *
 from recomendacion import *
+from consultas import *
 from neo4j import GraphDatabase
 import csv
 import io
@@ -165,15 +166,16 @@ def vista_consultar_miembros():
     if request.method == "POST":
         cId = request.form.get("club_id")
         miembros = get_miembros(driver, cId)
-        print("club id:", cId)
-        print("miembros:", miembros)
         return render_template("consultarMiembros.html", clubs = clubs, miembros=miembros)
     return render_template("consultarMiembros.html", clubs = clubs)
 
 @app.route("/consulta3", methods=["GET", "POST"])
-def vista_consulta3():
-    # Lógica para la consulta 3
-    return render_template("consulta3.html")
+def vista_consultar_mas_libros_leidos():
+    #if request.method == "POST":
+    resultados = get_mas_libros_leidos(driver)
+    
+        
+    return render_template("consultarMasLibrosLeidos.html", resultados=resultados)
 
 @app.route("/consulta4", methods=["GET", "POST"])
 def vista_consulta4():

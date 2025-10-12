@@ -28,4 +28,4 @@ def add_membresia(driver, pIdPersona, pIdClub):
 def add_membresias(driver, pListaMembresias):
     for membresia in pListaMembresias:
         add_membresia(driver, membresia["id"], membresia["idClub"])
-        #print("Membresía añadida:", membresia["id"])
+    

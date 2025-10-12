@@ -40,10 +40,9 @@ def add_libros(driver, pListaLibros):
     for libro in pListaLibros:
         add_libro(driver, libro["idLibro"], libro["Titulo"], libro["Genero"], libro["Anno"])
         
-
 def listar_libros(driver):
     query_result = driver.execute_query(
-        "MATCH (l:Libro) RETURN l.idLibro AS idLibro, l.Titulo AS titulo, l.Genero AS genero, l.Anno AS anno"
+        "MATCH (l:Libro) RETURN l.idLibro AS idLibro, l.Titulo AS titulo, l.Genero AS genero, l.Anno AS anno ORDER BY l.idLibro"
     )
     
     try:

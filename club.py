@@ -38,10 +38,9 @@ def add_clubs(driver, pListaClubs):
     for club in pListaClubs:
         add_club(driver, club["idClub"], club["Nombre"], club["Ubicacion"], club["Tematica"])
         
-
 def listar_clubs(driver):
     query_result = driver.execute_query(
-        "MATCH (c:Club) RETURN c.idClub AS idClub, c.Nombre AS nombre, c.Ubicacion AS ubicacion, c.Tematica AS tematica"
+        "MATCH (c:Club) RETURN c.idClub AS idClub, c.Nombre AS nombre, c.Ubicacion AS ubicacion, c.Tematica AS tematica ORDER BY c.idClub"
     )
     
     try:
