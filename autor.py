@@ -35,7 +35,6 @@ def add_autor(driver, pIdAutor, pNombre, pNacionalidad):
 def add_autores(driver, pListaAutores):
     for autor in pListaAutores:
         add_autor(driver, autor["idAutor"], autor["Nombre"], autor["Nacionalidad"])
-        print("Autor añadido:", autor["Nombre"])
 
 def listar_autores(driver):
     query_result = driver.execute_query(
@@ -63,7 +62,6 @@ def listar_autores(driver):
         except (KeyError, IndexError) as e:
             autor_str = str(autor_id) if 'autor_id' in locals() else 'N/A'
             print(f"Error al procesar el registro con ID {autor_str}: {e}")
-    print("autores:", autores)
     return autores
 
 def generar_id_autor(driver):

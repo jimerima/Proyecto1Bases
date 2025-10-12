@@ -121,6 +121,10 @@ def ruta_cargar_datos():
 def pagina_principal():
     return render_template("PaginaPrincipal.html")
 
+@app.route("/persona")
+def vista_persona():
+    return render_template("persona.html")
+
 @app.route("/autores")
 def vista_autores():
     return render_template("autores.html")
@@ -141,77 +145,7 @@ def vista_asociacion():
 def vista_consultas():
     return render_template("consultas.html")
 
-@app.route("/persona")
-def vista_persona():
-    return render_template("persona.html")
 
-# Rutas para agregar y modificar
-
-@app.route("/agregarPersona")
-def vista_agregar_persona():
-    return render_template("agregarPersona.html")
-
-@app.route("/modificarPersona", methods=["GET"])
-def vista_modificar_persona():
-    personas = listar_personas(driver)
-    return render_template("modificarPersona.html", personas=personas)
-
-@app.route("/agregarAutor")
-def vista_agregar_autor():
-    return render_template("agregarAutor.html")
-
-@app.route("/modificarAutor", methods=["GET"])
-def vista_modificar_autor():
-    autores = listar_autores(driver)
-    return render_template("modificarAutor.html", autores=autores)
-
-@app.route("/agregarLibro")
-def vista_agregar_libro():
-    return render_template("agregarLibro.html")
-
-@app.route("/modificarLibro", methods=["GET"])
-def vista_modificar_libro():    
-    libros = listar_libros(driver)
-    if libros is None:
-        libros = {}
-    return render_template("modificarLibro.html", libros=libros)
-
-@app.route("/agregarClub")
-def vista_agregar_club():
-    return render_template("agregarClub.html")
-
-@app.route("/modificarClub", methods=["GET"])
-def vista_modificar_club():    
-    clubes = listar_clubs(driver)
-    if clubes is None:
-        clubes = {}
-    return render_template("modificarClub.html", clubes=clubes)
-
-# Rutas para asociaciones (pendiente de implementar la lógica)
-
-@app.route("/agregarMembresia", methods=["GET"])
-def vista_asociar_persona_a_club():
-    personas = listar_personas(driver)
-    clubs = listar_clubs(driver)
-    return render_template("agregarMembresia.html", personas=personas, clubs=clubs)
-
-@app.route("/agregarLectura", methods=["GET"])
-def vista_asociar_persona_a_libro():
-    personas = listar_personas(driver)
-    libros = listar_libros(driver)
-    return render_template("agregarLectura.html", personas=personas, libros=libros)
-
-@app.route("/agregarRecomendacion", methods=["GET"])
-def vista_asociar_club_a_libro():
-    clubs = listar_clubs(driver)
-    libros = listar_libros(driver)
-    return render_template("agregarRecomendacion.html", clubs=clubs, libros=libros)
-
-@app.route("/agregarAutoria", methods=["GET"])
-def vista_asociar_autor_a_libro():
-    autores = listar_autores(driver)
-    libros = listar_libros(driver)
-    return render_template("agregarAutoria.html", autores=autores, libros=libros)
 
 # Rutas para consultas (pendiente de implementar la lógica)
 
@@ -256,9 +190,7 @@ def agregar_persona():
         flash("Persona agregada correctamente con ID: " + pId, "success")
         return redirect(url_for("vista_persona"))
     
-    nuevo_id = generar_id_persona(driver)
-    
-    return render_template("agregarPersona.html", nuevo_id=nuevo_id)
+    return render_template("agregarPersona.html")
 
 # Modificar persona
 @app.route("/modificarPersona", methods=["GET", "POST"])
@@ -272,8 +204,8 @@ def modificar_persona():
         
         flash("Persona modificada correctamente con ID: " + pId, "success")
         return redirect(url_for("vista_persona"))
-    
-    return vista_modificar_persona()
+    personas = listar_personas(driver)
+    return render_template("modificarPersona.html", personas=personas)
 
 # ------------------------- Autores -------------------------
 # Agregar autor
@@ -288,10 +220,7 @@ def agregar_autor():
         
         flash("Autor agregado correctamente con ID: " + aId, "success")
         return redirect(url_for("vista_autores"))
-    
-    nuevo_id = generar_id_autor(driver)
-    
-    return render_template("agregarAutor.html", nuevo_id=nuevo_id)
+    return render_template("agregarAutor.html")
 
 # Modificar autor
 @app.route("/modificarAutor", methods=["GET", "POST"])
@@ -305,7 +234,6 @@ def modificar_autor():
         
         flash("Autor modificado correctamente con ID: " + aId, "success")
         return redirect(url_for("vista_autores"))
-    
     autores = listar_autores(driver)
     return render_template("modificarAutor.html", autores=autores)
 
@@ -323,14 +251,11 @@ def agregar_libro():
         
         flash("Libro agregado correctamente con ID: " + str(lId), "success")
         return redirect(url_for("vista_libros"))
-
-    return render_template("agregarLibro.html", nuevo_id=lId)
+    return render_template("agregarLibro.html")
 
 # Modificar libro
 @app.route("/modificarLibro", methods=["GET", "POST"])
 def modificar_libro():
-    libros = listar_libros(driver) 
-    
     if request.method == "POST":
         lId = request.form.get("id")   
         lTitulo = request.form.get("titulo")
@@ -341,7 +266,7 @@ def modificar_libro():
         
         flash("Libro modificado correctamente con ID: " + str(lId), "success")
         return redirect(url_for("vista_libros"))
-
+    libros = listar_libros(driver) 
     return render_template("modificarLibro.html", libros=libros)
 
 ##------------------------- Clubes -------------------------
@@ -357,9 +282,8 @@ def agregar_club():
         
         flash("Club agregado correctamente con ID: " + cId, "success")
         return redirect(url_for("vista_clubes"))
-    
-    nuevo_id = generar_id_club(driver)
-    return render_template("agregarClub.html", nuevo_id=nuevo_id)
+
+    return render_template("agregarClub.html")
 
 # Modificar club
 @app.route("/modificarClub", methods=["GET", "POST"])
@@ -391,7 +315,9 @@ def agregar_membresia():
 
         flash("Membresías agregadas correctamente para la persona con ID: " + mIdPersona, "success")
         return redirect(url_for("pagina_principal"))
-    return vista_asociar_persona_a_club()
+    personas = listar_personas(driver)
+    clubs = listar_clubs(driver)
+    return render_template("agregarMembresia.html", personas=personas, clubs=clubs)
 
 ##-------------------------Autorias-------------------------
 # Agregar autoria
@@ -405,7 +331,9 @@ def agregar_autoria():
 
         flash("Autorías agregadas correctamente para el autor con ID: " + aIdAutor, "success")
         return redirect(url_for("pagina_principal"))
-    return vista_asociar_autor_a_libro()
+    autores = listar_autores(driver)
+    libros = listar_libros(driver)
+    return render_template("agregarAutoria.html", autores=autores, libros=libros)
 
 ##-------------------------Lecturas-------------------------
 # Agregar lectura
@@ -419,7 +347,9 @@ def agregar_lectura():
 
         flash("Lecturas agregadas correctamente para la persona con ID: " + lIdPersona, "success")
         return redirect(url_for("pagina_principal"))
-    return vista_asociar_persona_a_libro()
+    personas = listar_personas(driver)
+    libros = listar_libros(driver)
+    return render_template("agregarLectura.html", personas=personas, libros=libros)
 
 ##-------------------------Recomendaciones-------------------------
 # Agregar recomendacion
@@ -433,7 +363,9 @@ def agregar_recomendacion():
 
         flash("Recomendaciones agregadas correctamente para el club con ID: " + rIdClub, "success")
         return redirect(url_for("pagina_principal"))
-    return vista_asociar_club_a_libro()
+    clubs = listar_clubs(driver)
+    libros = listar_libros(driver)
+    return render_template("agregarRecomendacion.html", clubs=clubs, libros=libros)
 
 #-------------------------------------------------- MAIN --------------------------------------------------
 if __name__ == "__main__":

@@ -39,7 +39,7 @@ def add_libro(driver, pIdLibro, pTitulo, pGenero, pAnno):
 def add_libros(driver, pListaLibros):
     for libro in pListaLibros:
         add_libro(driver, libro["idLibro"], libro["Titulo"], libro["Genero"], libro["Anno"])
-        print("Libro añadido:", libro["Titulo"])
+        
 
 def listar_libros(driver):
     query_result = driver.execute_query(
