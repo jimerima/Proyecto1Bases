@@ -1,10 +1,19 @@
-def get_miembros(driver, pIdClub): #para consulta
-    result = driver.execute_query(
-        "MATCH (p:Persona) WHERE (p)-[PERTENECE_A]->(:Club {idClub: $idClub}) RETURN p.nombre",
-        idClub = int(pIdClub))
-    if result.records == []:
-        return None
-    return result.records[0].data()["p"] #gotta double check
+def get_miembros(driver, pIdClub): 
+    resultado = driver.execute_query(
+        "MATCH (p:Persona)-[:PERTENECE_A]->(c:Club {idClub: $idClub}) "
+        "RETURN p.id AS id, p.Nombre AS Nombre ORDER BY p.id",
+        idClub = int(pIdClub)
+    )
+
+    records = resultado.records
+
+    miembros = []
+    for record in records:
+        try:
+            miembros.append({"id":record[0],"Nombre":record[1]})
+        except (KeyError, IndexError) as e:
+            print(f"Error procesando el registro {record}: {e}")
+    return miembros
 
 def add_membresia(driver, pIdPersona, pIdClub):
     query = "MATCH (p:Persona {id: $idPersona}), (c:Club {idClub: $idClub}) MERGE (p)-[:PERTENECE_A]->(c)"

@@ -41,10 +41,10 @@ def listar_autores(driver):
     "MATCH (a:Autor) RETURN a.idAutor AS idAutor, a.Nombre AS nombre, a.Nacionalidad AS nacionalidad ORDER BY a.idAutor"
     )   
     
-    try:
-        records = query_result.records
-    except AttributeError:
-        records = query_result 
+    #try:
+    records = query_result.records
+    #except AttributeError:
+        #records = query_result 
 
     autores = {}
     

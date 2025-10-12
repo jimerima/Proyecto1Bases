@@ -2,8 +2,8 @@
 # Proyecto 1 - Bases de Datos Avanzadas                              #
 # Integrantes:                                                       #
 # María Jimena Rivera Madrigal (2023066336)                          #
-#
-#
+# Fabián Granados Rivera (2023395799)                                #
+# Brandon Badilla Rodriguez ()
 ######################################################################
 
 from flask import Flask, render_template, request, redirect, url_for, flash
@@ -149,27 +149,38 @@ def vista_consultas():
 
 # Rutas para consultas (pendiente de implementar la lógica)
 
-@app.route("/consulta1", methods=["GET"])
-def vista_consulta1():
-    # Lógica para la consulta 1
-    return render_template("consulta1.html")
+@app.route("/consulta1", methods=["GET", "POST"])
+def vista_consultar_lecturas():
+    personas = listar_personas(driver)
+    if request.method == "POST":
+        pId = request.form.get("persona_id")
+        libros = get_lecturas(driver, pId)
+        return render_template("consultarLecturas.html", personas=personas, libros=libros)
 
-@app.route("/consulta2", methods=["GET"])
-def vista_consulta2():
-    # Lógica para la consulta 2
-    return render_template("consulta2.html")
+    return render_template("consultarLecturas.html", personas=personas)
 
-@app.route("/consulta3", methods=["GET"])
+@app.route("/consulta2", methods=["GET", "POST"])
+def vista_consultar_miembros():
+    clubs = listar_clubs(driver)
+    if request.method == "POST":
+        cId = request.form.get("club_id")
+        miembros = get_miembros(driver, cId)
+        print("club id:", cId)
+        print("miembros:", miembros)
+        return render_template("consultarMiembros.html", clubs = clubs, miembros=miembros)
+    return render_template("consultarMiembros.html", clubs = clubs)
+
+@app.route("/consulta3", methods=["GET", "POST"])
 def vista_consulta3():
     # Lógica para la consulta 3
     return render_template("consulta3.html")
 
-@app.route("/consulta4", methods=["GET"])
+@app.route("/consulta4", methods=["GET", "POST"])
 def vista_consulta4():
     # Lógica para la consulta 4
     return render_template("consulta4.html")
 
-@app.route("/consulta5", methods=["GET"])
+@app.route("/consulta5", methods=["GET", "POST"])
 def vista_consulta5():
     # Lógica para la consulta 5
     return render_template("consulta5.html")
