@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block titulo %}Libros más populares{% endblock %}
+
+{% block contenido %}
+  <div class="hero" style="text-align:center; padding-top: 2rem;">
+    <div class="col" style="margin:auto; max-width:920px; text-align:left;">
+      <div class="eyebrow" style="font-weight:bold; color:#000;">Consultas</div>
+      <h1>Top 3 · Libros más leídos</h1>
+
+      <div class="actions" style="display:flex; justify-content:flex-end; gap:.8rem; margin:1rem 0;">
+        <a class="btn btn--secondary" href="{{ url_for('vista_consultas') }}"
+           style="text-decoration:none; background:#e0e0e0; color:#000;">⬅ Volver a Consultas</a>
+        <button class="btn btn--primary" type="button"
+                onclick="location.reload()"
+                style="padding:.6rem 1.2rem; border-radius:10px;">🔄 Refrescar</button>
+      </div>
+
+      {% if resultados and resultados|length %}
+        <div style="overflow:auto; border:1px solid #ddd; border-radius:10px; background:#fff;">
+          <table style="width:100%; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th style="text-align:left; padding:.7rem; border-bottom:1px solid #eee;">Libro</th>
+                <th style="text-align:right; padding:.7rem; border-bottom:1px solid #eee;">Número de lectores</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for r in resultados %}
+                <tr>
+                  <td style="padding:.65rem; border-bottom:1px solid #f3f3f3;">{{ r.Libro }}</td>
+                  <td style="padding:.65rem; border-bottom:1px solid #f3f3f3; text-align:right;">
+                    {{ r.NumeroDeLectores }}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p style="margin-top:.75rem; color:#000;">No hay resultados para mostrar.</p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

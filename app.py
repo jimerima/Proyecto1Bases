@@ -179,10 +179,10 @@ def vista_consultar_personas_en_mas_clubes():
     resultados = get_personas_en_mas_clubes(driver)
     return render_template("consultarPersonasEnMasClubes.html", resultados=resultados)
 
-@app.route("/consulta5", methods=["GET", "POST"])
-def vista_consulta5():
-    # Lógica para la consulta 5
-    return render_template("consulta5.html")
+@app.route("/consulta5", methods=["GET"])
+def vista_consultar_libros_mas_populares():
+    resultados = get_libros_mas_populares(driver)
+    return render_template("consultarLibrosMasPopulares.html", resultados=resultados)
 
 # -------------------------------------------------- Opciones de agregar y modificar --------------------------------------------------
 

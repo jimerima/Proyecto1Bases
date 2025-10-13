@@ -35,3 +35,20 @@ def get_personas_en_mas_clubes(driver):
             "Clubes": record.get("Clubes")
         })
     return resultados
+
+def get_libros_mas_populares(driver):
+    query = """MATCH (l:Libro)<-[:LEE]-(p:Persona)
+               WITH l, count(DISTINCT p) AS lectores
+               RETURN coalesce(l.Titulo) AS Libro, lectores AS NumeroDeLectores
+               ORDER BY NumeroDeLectores DESC, Libro ASC LIMIT 3;"""
+
+    resultado = driver.execute_query(query)
+    records = resultado.records
+    resultados = []
+
+    for record in records:
+        resultados.append({
+            "Libro": record.get("Libro"),
+            "NumeroDeLectores": record.get("NumeroDeLectores")
+        })
+    return resultados
