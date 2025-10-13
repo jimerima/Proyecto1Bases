@@ -169,18 +169,15 @@ def vista_consultar_miembros():
         return render_template("consultarMiembros.html", clubs = clubs, miembros=miembros)
     return render_template("consultarMiembros.html", clubs = clubs)
 
-@app.route("/consulta3", methods=["GET", "POST"])
+@app.route("/consulta3", methods=["GET"])
 def vista_consultar_mas_libros_leidos():
-    #if request.method == "POST":
     resultados = get_mas_libros_leidos(driver)
-    
-        
     return render_template("consultarMasLibrosLeidos.html", resultados=resultados)
 
-@app.route("/consulta4", methods=["GET", "POST"])
-def vista_consulta4():
-    # Lógica para la consulta 4
-    return render_template("consulta4.html")
+@app.route("/consulta4", methods=["GET"])
+def vista_consultar_personas_en_mas_clubes():
+    resultados = get_personas_en_mas_clubes(driver)
+    return render_template("consultarPersonasEnMasClubes.html", resultados=resultados)
 
 @app.route("/consulta5", methods=["GET", "POST"])
 def vista_consulta5():

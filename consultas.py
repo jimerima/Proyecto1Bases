@@ -18,3 +18,20 @@ def get_mas_libros_leidos(driver):
             "LibrosRecomendadosLeidos": record.get("LibrosRecomendadosLeidos")
         })
     return resultados
+
+def get_personas_en_mas_clubes(driver):
+    query = """MATCH (p:Persona)-[:PERTENECE_A]->(c:Club)
+               WITH p, collect(coalesce(c.Nombre)) AS Clubes
+               RETURN coalesce(p.Nombre) AS Persona, Clubes
+               ORDER BY size(Clubes) DESC, Persona ASC;"""
+
+    resultado = driver.execute_query(query)
+    records = resultado.records
+    resultados = []
+
+    for record in records:
+        resultados.append({
+            "Persona": record.get("Persona"),
+            "Clubes": record.get("Clubes")
+        })
+    return resultados
