@@ -7,5 +7,5 @@ def add_autoria(driver, pIdAutor, pIdLibro):
 
 def add_autorias(driver, pListaAutorias):
     for autoria in pListaAutorias:
-        add_autoria(driver, autoria["idAutor"], autoria["idLibro"])
+        add_autoria(driver, autoria["idautor"], autoria["idlibro"])
         

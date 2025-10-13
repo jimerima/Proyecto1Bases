@@ -57,7 +57,7 @@ def ruta_cargar_datos():
         return redirect(url_for("index"))
 
     NODE_FILES = {"Persona.csv", "Club.csv", "Autor.csv", "Libro.csv"}
-    REL_FILES  = {"Persona-club.csv", "Autor-libro.csv", "Persona-libro.csv", "Club-libro.csv"}
+    REL_FILES  = {"Persona-club.csv", "Persona-club2.csv", "Autor-libro.csv", "Persona-libro.csv", "Club-libro.csv"}
     KNOWN = NODE_FILES | REL_FILES
 
     ok, unknown = [], []
@@ -71,7 +71,8 @@ def ruta_cargar_datos():
         texto = io.TextIOWrapper(archivo.stream, encoding="utf-8-sig", newline="")
         reader = csv.DictReader(texto, delimiter=";")
         data_list = list(reader)
-        parsed.append((nombre, data_list))
+        normalized_data_list = [{k.lower(): v for k, v in row.items()} for row in data_list]
+        parsed.append((nombre, normalized_data_list))
 
     
     def dispatch(nombre, data_list):
@@ -81,6 +82,7 @@ def ruta_cargar_datos():
             case "Autor.csv":           add_autores(driver, data_list)
             case "Libro.csv":           add_libros(driver, data_list)
             case "Persona-club.csv":   add_membresias(driver, data_list)
+            case "Persona-club2.csv":   add_membresias(driver, data_list)
             case "Autor-libro.csv":    add_autorias(driver, data_list)
             case "Persona-libro.csv":   add_lecturas(driver, data_list)
             case "Club-libro.csv":     add_recomendaciones(driver, data_list)

@@ -34,7 +34,7 @@ def add_persona(driver, pId, pNombre, pTipoLector):
 
 def add_personas(driver, pListaPersonas):
     for persona in pListaPersonas:
-        add_persona(driver, persona["id"], persona["Nombre"], persona["TipoLector"])
+        add_persona(driver, persona["id"], persona["nombre"], persona["tipolector"])
         
 def listar_personas(driver):
     query_result = driver.execute_query(

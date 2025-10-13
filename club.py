@@ -36,7 +36,7 @@ def add_club(driver, pIdClub, pNombre, pUbicacion, pTematica):
 
 def add_clubs(driver, pListaClubs):
     for club in pListaClubs:
-        add_club(driver, club["idClub"], club["Nombre"], club["Ubicacion"], club["Tematica"])
+        add_club(driver, club["idclub"], club["nombre"], club["ubicacion"], club["tematica"])
         
 def listar_clubs(driver):
     query_result = driver.execute_query(

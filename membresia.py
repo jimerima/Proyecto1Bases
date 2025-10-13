@@ -27,5 +27,7 @@ def add_membresia(driver, pIdPersona, pIdClub):
 
 def add_membresias(driver, pListaMembresias):
     for membresia in pListaMembresias:
-        add_membresia(driver, membresia["id"], membresia["idClub"])
-    
+        try:
+            add_membresia(driver, membresia["id"], membresia["idclub"])
+        except KeyError:
+            add_membresia(driver, membresia["idpersona"], membresia["idclub"])

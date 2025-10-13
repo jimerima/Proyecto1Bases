@@ -7,5 +7,5 @@ def add_recomendacion(driver, pIdClub, pIdLibro):
 
 def add_recomendaciones(driver, pListaRecomendaciones):
     for recomendacion in pListaRecomendaciones:
-        add_recomendacion(driver, recomendacion["idClub"], recomendacion["idLibro"])
+        add_recomendacion(driver, recomendacion["idclub"], recomendacion["idlibro"])
         

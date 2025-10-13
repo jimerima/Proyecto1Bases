@@ -34,7 +34,7 @@ def add_autor(driver, pIdAutor, pNombre, pNacionalidad):
 
 def add_autores(driver, pListaAutores):
     for autor in pListaAutores:
-        add_autor(driver, autor["idAutor"], autor["Nombre"], autor["Nacionalidad"])
+        add_autor(driver, autor["idautor"], autor["nombre"], autor["nacionalidad"])
 
 def listar_autores(driver):
     query_result = driver.execute_query(
