@@ -5,19 +5,19 @@
 {% block contenido %}
   <div class="hero" style="text-align:center; padding-top: 2rem;">
     <div class="col" style="margin:auto; max-width:640px; text-align:left;">
-      <div class="eyebrow" style="font-weight: bold; color: #000;">Autores</div>
+      <div class="eyebrow">Autores</div>
       <h1>Agregar autor</h1>
-      <p class="lead" style="text-align: center; font-size: 1.2rem; margin-bottom: 1.5rem; color: #000;">Completa los datos y guarda los cambios.</p>
+      <p class="lead" style="font-size: 1.2rem; margin-bottom: 1.5rem; color: #fff;">Completa los datos y guarda los cambios.</p>
 
       <form action="{{ url_for('agregar_autor') }}" method="post" style="margin-top: 1.5rem;">
 
         <div class="form-control" style="margin-bottom: 1.5rem;">
-          <label for="nombre" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Nombre</label>
+          <label for="nombre" style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Nombre</label>
           <input type="text" name="nombre" id="nombre" required placeholder="Ingrese el nombre completo" style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
         </div>
 
         <div class="form-control" style="margin-bottom: 1.5rem;">
-          <label for="nacionalidad" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Nacionalidad</label>
+          <label for="nacionalidad" style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Nacionalidad</label>
           <select name="nacionalidad" id="nacionalidad" required style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
             <option value="">-- Seleccionar Nacionalidad --</option>
             <option value="Alemán">Alemán</option>

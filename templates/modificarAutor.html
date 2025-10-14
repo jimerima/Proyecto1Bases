@@ -5,15 +5,15 @@
 {% block contenido %}
   <div class="hero" style="text-align:center; padding-top: 2rem;">
     <div class="col" style="margin:auto; max-width:640px; text-align:left;">
-      <div class="eyebrow" style="font-weight: bold; color: #000;">Autores</div>
+      <div class="eyebrow">Autores</div>
       <h1>Modificar autor</h1>
-      <p class="lead" style="text-align: center; font-size: 1.2rem; margin-bottom: 1.5rem; color: #000;">Selecciona el autor y actualiza su nombre o nacionalidad.</p>
+      <p class="lead" style="font-size: 1.2rem; margin-bottom: 1.5rem; color: #fff;">Selecciona el autor y actualiza su nombre o nacionalidad.</p>
 
       <form action="{{ url_for('modificar_autor') }}" method="post" style="margin-top: 1.5rem;">
 
         <!-- Seleccionar Autor -->
         <div class="form-control" style="margin-bottom: 1.5rem;">
-          <label for="autor_id" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Seleccionar Autor (ID | Nombre)</label>
+          <label for="autor_id" style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Seleccionar Autor (ID | Nombre)</label>
           <select name="id" id="autor_id" required style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
             <option value="">-- Seleccione un autor a modificar --</option>
             {% for id, data in autores.items() %}
@@ -24,13 +24,13 @@
 
         <!-- Nuevo Nombre -->
         <div class="form-control" style="margin-bottom: 1.5rem;">
-          <label for="nombre" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Nuevo Nombre</label>
+          <label for="nombre" style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Nuevo Nombre</label>
           <input type="text" name="nombre" id="nombre" required placeholder="Nombre (Obligatorio)" style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
         </div>
 
         <!-- Nueva Nacionalidad -->
         <div class="form-control" style="margin-bottom: 1.5rem;">
-          <label for="nacionalidad" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Nueva Nacionalidad</label>
+          <label for="nacionalidad" style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Nueva Nacionalidad</label>
           <select name="nacionalidad" id="nacionalidad" required style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
             <option value="">-- Seleccionar nueva Nacionalidad --</option>
             <option value="Alemán">Alemán</option>

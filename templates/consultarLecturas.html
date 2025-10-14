@@ -8,31 +8,54 @@
       <div class="eyebrow" style="font-weight: bold; color:#000;">Consultas</div>
       <h1>Consultar lecturas por persona</h1>
       <p class="lead" style="text-align:center; font-size:1.05rem; margin-bottom:1.25rem; color:#000;">
-        Selecciona a la persona a <strong>consultar</strong>.
+        Selecciona a la persona a consultar <strong>Consultar</strong>.
       </p>
 
       <form action="{{ url_for('vista_consultar_lecturas') }}" method="post" style="margin-top:1rem;">
+        <!-- Persona (input con datalist) -->
+        <div class="form-control" style="margin-bottom:1.25rem;">
+          <label for="persona_nombre" style="font-weight:600; margin-bottom:.5rem; color:#000;">O escribir nombre</label>
+          <input type="text" name="persona_nombre" id="persona_nombre" list="sugerencias_personas"
+                 placeholder="Ej.: Ana Rojas"
+                 style="width:100%; padding:.8rem; font-size:1rem; border-radius:8px; border:1px solid #ccc;">
+          <input type="hidden" name="persona_id" id="persona_id">
 
-        <!-- Persona (select dentro de form-control) -->
-        <div class="form-group" style="margin-bottom:1.25rem;">
-          <label for="persona_id" style="font-weight:600; margin-bottom:.5rem; color:#000;">Selecciona una persona</label>
-          <select name="persona_id" id="persona_id" class="form-control"
-                  style="width:100%; padding:.8rem; font-size:1rem; border-radius:8px; border:1px solid #ccc;">
-            <option value="" disabled selected>Selecciona una persona</option>
+          <datalist id="sugerencias_personas">
             {% if personas.items is defined %}
               {% for id, p in personas.items() %}
-                <option value="{{ id }}">{{ id }} — {{ p.nombre }}</option>
+                <option value="{{ p.nombre }}" data-id="{{ id }}">{{ id }} — {{ p.nombre }}</option>
               {% endfor %}
             {% else %}
               {% for p in personas %}
-                <option value="{{ p.id }}">{{ p.id }} — {{ p.nombre }}</option>
+                <option value="{{ p.nombre }}" data-id="{{ p.id }}">{{ p.id }} — {{ p.nombre }}</option>
               {% endfor %}
             {% endif %}
-          </select>
+          </datalist>
+
           <small style="display:block; margin-top:.4rem; color:#000;">
-            Solo puedes seleccionar del listado.
+            Si escribes el nombre, se ignorará la selección del listado.
           </small>
         </div>
+
+        <script>
+          // Cuando el usuario selecciona un nombre del datalist, poner el id en el input hidden
+          document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('persona_nombre');
+            const hidden = document.getElementById('persona_id');
+            const datalist = document.getElementById('sugerencias_personas');
+            input.addEventListener('input', function() {
+              let found = false;
+              for (const option of datalist.options) {
+                if (option.value === input.value) {
+                  hidden.value = option.getAttribute('data-id');
+                  found = true;
+                  break;
+                }
+              }
+              if (!found) hidden.value = '';
+            });
+          });
+        </script>
 
         <!-- Acciones -->
         <div class="actions" style="display:flex; justify-content:flex-end; gap:.8rem; margin-top:1.1rem;">
@@ -80,5 +103,4 @@
       {% endif %}
     </div>
   </div>
-
 {% endblock %}

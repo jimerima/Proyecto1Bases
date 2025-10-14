@@ -5,21 +5,19 @@
 {% block contenido %}
   <div class="hero" style="text-align:center; padding-top: 2rem;">
     <div class="col" style="margin:auto; max-width:640px; text-align:left;">
-      <div class="eyebrow" style="font-weight: bold; color: #000;">Libros</div>
+      <div class="eyebrow">Libros</div>
       <h1>Agregar libro</h1>
-      <p class="lead" style="text-align: center; font-size: 1.2rem; margin-bottom: 1.5rem; color: #000;">Completa los datos del libro.</p>
+      <p class="lead" style="font-size: 1.2rem; margin-bottom: 1.5rem; color: #fff;">Completa los datos del libro.</p>
 
       <form action="{{ url_for('agregar_libro') }}" method="post" style="margin-top: 1.5rem;">
 
-        <!-- Título del libro -->
         <div class="form-control" style="margin-bottom: 1.5rem;">
-          <label for="titulo" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Título</label>
+          <label for="titulo" style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Título</label>
           <input type="text" name="titulo" id="titulo" required placeholder="Ingrese el título del libro" style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
         </div>
 
-        <!-- Género -->
         <div class="form-control" style="margin-bottom: 1.5rem;">
-          <label for="genero" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Género</label>
+          <label for="genero" style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Género</label>
           <select name="genero" id="genero" required style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
             <option value="">-- Seleccione un Género --</option>
             <option value="Ficción">Ficción</option>
@@ -32,16 +30,28 @@
             <option value="Biografía">Biografía</option>
             <option value="Ensayo">Ensayo</option>
             <option value="Poesía">Poesía</option>
+            <option value="Aventura">Aventura</option>
+            <option value="Drama">Drama</option>
+            <option value="Comedia">Comedia</option>
+            <option value="Suspenso">Suspenso</option>
+            <option value="Terror">Terror</option>
+            <option value="Horror">Horror</option>
+            <option value="Romántico">Romántico</option>
+            <option value="No Ficción">No Ficción</option>
+            <option value="Literatura Infantil">Literatura Infantil</option>
+            <option value="Filosofía">Filosofía</option>
+            <option value="Psicología">Psicología</option>
+            <option value="Arte">Arte</option>
+            <option value="Cultura">Cultura</option>
+            <option value="Economía">Economía</option>
           </select>
         </div>
 
-        <!-- Año de Publicación -->
         <div class="form-control" style="margin-bottom: 1.5rem;">
-          <label for="anno" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Año de Publicación</label>
+          <label for="anno" style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Año de Publicación</label>
           <input type="number" name="anno" id="anno" required min="1000" max="2025" placeholder="Ej: 2025" style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
         </div>
 
-        <!-- Botones de Acción -->
         <div class="actions" style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem;">
           <a class="btn btn--secondary" href="{{ url_for('vista_libros') }}" style="text-decoration: none; background-color: #e0e0e0; color: #000;">⬅ Cancelar</a>
           <button class="btn btn--primary" type="submit" style="padding: 0.8rem 2rem; font-size: 1rem; border-radius: 10px; background-color: #000; color: #000;">💾 Guardar</button>

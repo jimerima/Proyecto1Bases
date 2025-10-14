@@ -5,15 +5,14 @@
 {% block contenido %}
   <div class="hero" style="text-align:center; padding-top: 2rem;">
     <div class="col" style="margin:auto; max-width:640px; text-align:left;">
-      <div class="eyebrow" style="font-weight: bold; color: #000;">Clubes</div>
+      <div class="eyebrow">Clubes</div>
       <h1>Modificar club</h1>
-      <p class="lead" style="text-align: center; font-size: 1.2rem; margin-bottom: 1.5rem; color: #000;">Selecciona el club a editar y actualiza sus datos.</p>
+      <p class="lead" style="font-size: 1.2rem; margin-bottom: 1.5rem; color: #fff;">Selecciona el club a editar y actualiza sus datos.</p>
 
       <form action="{{ url_for('modificar_club') }}" method="post" style="margin-top: 1.5rem;">
 
-        <!-- Seleccionar Club -->
         <div class="form-control" style="margin-bottom: 1.5rem;">
-          <label for="club_id" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Seleccionar Club (ID | Nombre)</label>
+          <label for="club_id" style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Seleccionar Club (ID | Nombre)</label>
           <select name="id" id="club_id" required style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
             <option value="">-- Seleccione un club a modificar --</option>
             {% for id, data in clubes.items() %}
@@ -22,34 +21,47 @@
           </select>
         </div>
 
-        <!-- Nueva Nombre -->
         <div class="form-control" style="margin-bottom: 1.5rem;">
-          <label for="nombre" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Nuevo Nombre del Club</label>
+          <label for="nombre" style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Nuevo Nombre del Club</label>
           <input type="text" name="nombre" id="nombre" required placeholder="Nombre (Obligatorio)" style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
         </div>
 
-        <!-- Nueva Ubicación -->
         <div class="form-control" style="margin-bottom: 1.5rem;">
-          <label for="ubicacion" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Nueva Ubicación del Club</label>
+          <label for="ubicacion" style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Nueva Ubicación del Club</label>
           <input type="text" name="ubicacion" id="ubicacion" required placeholder="Ubicación (Obligatorio)" style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
         </div>
 
-        <!-- Nuevo Tema o Género Principal -->
         <div class="form-control" style="margin-bottom: 1.5rem;">
-          <label for="tematica" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Nuevo Tema o Género Principal</label>
+          <label for="tematica" style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Nuevo Tema o Género Principal</label>
           <select name="tematica" id="tematica" required style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
             <option value="">-- Seleccione nuevo Tema --</option>
-            <option value="Ficción Clásica">Ficción Clásica</option>
-            <option value="Misterio/Thriller">Misterio/Thriller</option>
+            <option value="Ficción">Ficción</option>
+            <option value="Misterio">Misterio</option>
             <option value="Ciencia Ficción">Ciencia Ficción</option>
-            <option value="Fantasía Épica">Fantasía Épica</option>
-            <option value="No Ficción">No Ficción</option>
+            <option value="Fantasía">Fantasía</option>
+            <option value="Romance">Romance</option>
+            <option value="Thriller">Thriller</option>
             <option value="Historia">Historia</option>
-            <option value="Novela Gráfica">Novela Gráfica</option>
+            <option value="Biografía">Biografía</option>
+            <option value="Ensayo">Ensayo</option>
+            <option value="Poesía">Poesía</option>
+            <option value="Aventura">Aventura</option>
+            <option value="Drama">Drama</option>
+            <option value="Comedia">Comedia</option>
+            <option value="Suspenso">Suspenso</option>
+            <option value="Terror">Terror</option>
+            <option value="Horror">Horror</option>
+            <option value="Romántico">Romántico</option>
+            <option value="No Ficción">No Ficción</option>
+            <option value="Literatura Infantil">Literatura Infantil</option>
+            <option value="Filosofía">Filosofía</option>
+            <option value="Psicología">Psicología</option>
+            <option value="Arte">Arte</option>
+            <option value="Cultura">Cultura</option>
+            <option value="Economía">Economía</option>
           </select>
         </div>
 
-        <!-- Botones de Acción -->
         <div class="actions" style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem;">
           <a class="btn btn--secondary" href="{{ url_for('vista_clubes') }}" style="text-decoration: none; background-color: #e0e0e0; color: #000;">⬅ Cancelar</a>
           <button class="btn btn--primary" type="submit" style="padding: 0.8rem 2rem; font-size: 1rem; border-radius: 10px; background-color: #000; color: #000;">💾 Guardar cambios</button>

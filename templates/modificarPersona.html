@@ -5,15 +5,15 @@
 {% block contenido %}
   <div class="hero" style="text-align:center; padding-top: 2rem;">
     <div class="col" style="margin:auto; max-width:720px; text-align:left;">
-      <div class="eyebrow" style="font-weight: bold; color: #000;">Persona</div>
+      <div class="eyebrow">Persona</div>
       <h1>Modificar persona</h1>
-      <p class="lead" style="text-align: center; font-size: 1.2rem; margin-bottom: 1.5rem; color: #000;">Selecciona la persona y actualiza su nombre/tipo de lector.</p>
+      <p class="lead" style= "font-size: 1.2rem; margin-bottom: 1.5rem; color: #fff;">Selecciona la persona y actualiza su nombre o tipo de lector.</p>
 
       <form action="{{ url_for('modificar_persona') }}" method="post" style="margin-top: 1.5rem;">
 
         <!-- Seleccionar Persona -->
         <div class="form-control" style="margin-bottom: 1rem;">
-          <label for="persona_id" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Seleccionar Persona (ID | Nombre)</label>
+          <label for="persona_id" style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Seleccionar Persona (ID | Nombre)</label>
           <select name="id" id="persona_id" required style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
             <option value="">-- Seleccione una persona --</option>
             {% for id, data in personas.items() %}
@@ -24,13 +24,13 @@
 
         <!-- Nuevo Nombre -->
         <div class="form-control" style="margin-bottom: 1rem;">
-          <label for="nuevo_nombre" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Nuevo Nombre</label>
+          <label for="nuevo_nombre" style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Nuevo Nombre</label>
           <input type="text" name="nombre" id="nuevo_nombre" required placeholder="Ingrese el nuevo nombre completo" style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;" />
         </div>
 
         <!-- Nuevo Tipo de Lector -->
         <div class="form-control" style="margin-bottom: 1rem;">
-          <label for="nuevo_tipo" style="font-weight: 600; margin-bottom: 0.5rem; color: #000;">Nuevo Tipo de lector</label>
+          <label for="nuevo_tipo" style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Nuevo Tipo de lector</label>
           <select name="tipo_lector" id="nuevo_tipo" required style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;">
             <option value="">-- Seleccione el nuevo tipo --</option>
             <option value="casual">Casual</option>
