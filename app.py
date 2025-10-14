@@ -172,7 +172,7 @@ def vista_consultar_lecturas():
     if request.method == "POST":
         pId = request.form.get("persona_id")
         if not pId:
-            flash("El nombre debe estar registrado. Por favor, selecciona una persona existente.", "error")
+            flash("El nombre debe estar registrado. Por favor, selecciona una persona.", "error")
             return render_template("consultarLecturas.html", personas=personas)
         
         libros = get_lecturas(driver, pId)

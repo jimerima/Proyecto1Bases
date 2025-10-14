@@ -27,17 +27,54 @@
       <div class="actions" style="justify-content:center">
         <form action="{{ url_for('ruta_cargar_datos') }}" method="post" enctype="multipart/form-data">
           
-          <input id="datos" type="file" name="datos" multiple accept=".csv" style="display:none">
+          <!-- Input oculto para archivos -->
+          <input id="datos" type="file" name="datos" multiple accept=".csv" style="display:none" onchange="checkFilesSelected()">
 
-          
-          <button class="btn" type="button" onclick="document.getElementById('datos').click()">
+          <!-- Botón para seleccionar archivos -->
+          <button class="btn" type="button" 
+                  onclick="document.getElementById('datos').click()" 
+                  style="font-weight:bold; margin-right:8px;">
             Seleccionar CSVs
           </button>
 
-          
-          <button class="btn" type="submit">Cargar datos</button>
+          <!-- Botón para enviar, inicialmente deshabilitado -->
+          <button class="btn" type="submit" id="cargarBtn" style="font-weight:bold;" disabled>
+            Cargar datos
+          </button>
+
         </form>
       </div>
     </div>
   </div>
+
+  <style>
+    /* Estilo del botón deshabilitado */
+    #cargarBtn:disabled {
+      background-color: #cccccc; 
+      color: #666666;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    /* Estilo del botón habilitado */
+    #cargarBtn:not(:disabled) {
+      background-color: #0ea5e9; 
+      color: #000;
+      cursor: pointer;
+      opacity: 1;
+      transition: background-color 0.2s ease;
+    }
+
+    #cargarBtn:not(:disabled):hover {
+      background-color: #0284c7; /
+    }
+  </style>
+
+  <script>
+    function checkFilesSelected() {
+      const input = document.getElementById('datos');
+      const btn = document.getElementById('cargarBtn');
+      btn.disabled = input.files.length === 0;
+    }
+  </script>
 {% endblock %}
