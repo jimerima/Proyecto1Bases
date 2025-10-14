@@ -5,20 +5,18 @@
 {% block contenido %}
   <div class="hero" style="text-align:center; padding-top: 2rem;">
     <div class="col" style="margin:auto; max-width:640px;">
-      <div class="eyebrow" style="font-weight: bold; color: #000;">Sección</div>
+      <div class="eyebrow">Sección</div>
       <h1>Consultas</h1>
-      <p class="lead" style="text-align: center; font-size: 1.2rem; margin-bottom: 1.5rem; color: #000;">Seleccione la consulta a realizar.</p>
+      <p class="lead" style="text-align: center; font-size: 1.2rem; margin-bottom: 1.5rem; color: #fff;">Seleccione la consulta a realizar.</p>
       
-      <!-- Botones para cada consulta -->
       <div class="actions" style="display: flex; flex-direction: column; justify-content: center; gap: 1rem; margin-top: 2rem;">
-        <a class="btn btn--primary" href="{{ url_for('vista_consultar_lecturas') }}" style="text-decoration: none;">📚 Consulta 1: Libros leídos por persona</a>
-        <a class="btn btn--primary" href="{{ url_for('vista_consultar_miembros') }}" style="text-decoration: none;">👥 Consulta 2: Personas del club</a>
-        <a class="btn btn--primary" href="{{ url_for('vista_consultar_mas_libros_leidos') }}" style="text-decoration: none;">📖 Consulta 3: Personas con más libros</a>
+        <a class="btn btn--primary" href="{{ url_for('vista_consultar_lecturas') }}" style="text-decoration: none;">📚 Consulta 1: Libros leídos por una persona</a>
+        <a class="btn btn--primary" href="{{ url_for('vista_consultar_miembros') }}" style="text-decoration: none;">📚 Consulta 2: Personas del club</a>
+        <a class="btn btn--primary" href="{{ url_for('vista_consultar_mas_libros_leidos') }}" style="text-decoration: none;">📚 Consulta 3: Personas con más libros</a>
         <a class="btn btn--primary" href="{{ url_for('vista_consultar_personas_en_mas_clubes') }}" style="text-decoration: none;">📚 Consulta 4: Personas en más clubes</a>
         <a class="btn btn--primary" href="{{ url_for('vista_consultar_libros_mas_populares') }}" style="text-decoration: none;">📚 Consulta 5: Libros más populares</a>
       </div>
 
-      <!-- Botón para volver a la página principal -->
       <div class="actions" style="justify-content:center; margin-top: 2rem;">
         <a class="btn btn--secondary" href="{{ url_for('pagina_principal') }}" style="text-decoration: none; background-color: #e0e0e0; color: #000;">⬅ Volver a la página principal</a>
       </div>

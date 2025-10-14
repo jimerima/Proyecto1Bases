@@ -171,10 +171,15 @@ def vista_consultar_lecturas():
     personas = listar_personas(driver)
     if request.method == "POST":
         pId = request.form.get("persona_id")
+        if not pId:
+            flash("El nombre debe estar registrado. Por favor, selecciona una persona existente.", "error")
+            return render_template("consultarLecturas.html", personas=personas)
+        
         libros = get_lecturas(driver, pId)
         return render_template("consultarLecturas.html", personas=personas, libros=libros)
 
     return render_template("consultarLecturas.html", personas=personas)
+
 
 @app.route("/consulta2", methods=["GET", "POST"])
 def vista_consultar_miembros():

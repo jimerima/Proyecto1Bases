@@ -5,16 +5,15 @@
 {% block contenido %}
   <div class="hero" style="text-align:center; padding-top: 2rem;">
     <div class="col" style="margin:auto; max-width:920px; text-align:left;">
-      <div class="eyebrow" style="font-weight: bold; color:#000;">Consultas</div>
+      <div class="eyebrow">Consultas</div>
       <h1>Consultar miembros por club</h1>
-      <p class="lead" style="text-align:center; font-size:1.05rem; margin-bottom:1.25rem; color:#000;">
+      <p class="lead" style="font-size:1.05rem; margin-bottom:1.25rem; color:#fff;">
         Selecciona el nombre del club y presiona <strong>Consultar</strong>.
       </p>
 
       <form action="{{ url_for('vista_consultar_miembros') }}" method="post" style="margin-top:1rem;">
-        <!-- Club (select dentro de form-control) -->
         <div class="form-group" style="margin-bottom:1.25rem;">
-          <label for="club_id" style="font-weight:600; margin-bottom:.5rem; color:#000;">Club</label>
+          <label for="club_id" style="font-weight:600; margin-bottom:.5rem; color:#fff;">Club</label>
           <select name="club_id" id="club_id" class="form-control"
                   style="width:100%; padding:.8rem; font-size:1rem; border-radius:8px; border:1px solid #ccc;">
             <option value="" disabled selected>Selecciona un club</option>
@@ -32,12 +31,11 @@
               {% endfor %}
             {% endif %}
           </select>
-          <small style="display:block; margin-top:.4rem; color:#000;">
+          <small style="display:block; margin-top:.4rem; color:#fff;">
             Selecciona el club exacto del listado.
           </small>
         </div>
 
-        <!-- Acciones -->
         <div class="actions" style="display:flex; justify-content:flex-end; gap:.8rem; margin-top:1.1rem;">
           <a class="btn btn--secondary" href="{{ url_for('vista_consultas') }}"
              style="text-decoration:none; background:#e0e0e0; color:#000;">⬅ Volver</a>
@@ -48,7 +46,7 @@
 
       {% if miembros is defined %}
         <div class="divider" style="margin:1.4rem 0;"></div>
-        <h2>Miembros</h2>
+        <h2 style="color:#fff;"> Miembros</h2>
 
         {% if miembros %}
           <div style="overflow:auto; border:1px solid #ddd; border-radius:10px; background:#fff;">
