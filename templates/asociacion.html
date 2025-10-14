@@ -5,19 +5,17 @@
 {% block contenido %}
   <div class="hero" style="text-align:center; padding-top: 2rem;">
     <div class="col" style="margin:auto; max-width:640px;">
-      <div class="eyebrow" style="font-weight: bold; color: #000;">Sección</div>
+      <div class="eyebrow">Sección</div>
       <h1>Asociación</h1>
       <p class="lead" style="margin: 0 auto; max-width: 60ch; text-align: center;" >Seleccione una opción para asociar.</p>
       
-      <!-- Botones de Asociación -->
       <div class="actions" style="display: flex; flex-direction: column; justify-content: center; gap: 1rem; margin-top: 2rem;">
-        <a class="btn btn--primary" href="{{ url_for('agregar_membresia') }}" style="text-decoration: none;">👤 Agregar membresía</a>
-        <a class="btn btn--primary" href="{{ url_for('agregar_lectura') }}" style="text-decoration: none;">📖 Agregar lectura</a>
-        <a class="btn btn--primary" href="{{ url_for('agregar_recomendacion') }}" style="text-decoration: none;">📚 Agregar recomendación</a>
-        <a class="btn btn--primary" href="{{ url_for('agregar_autoria') }}" style="text-decoration: none;">✍️ Agregar autoría</a>
+        <a class="btn btn--primary" href="{{ url_for('agregar_autoria') }}" style="text-decoration: none;">+ Agregar autoría</a>
+        <a class="btn btn--primary" href="{{ url_for('agregar_membresia') }}" style="text-decoration: none;">+ Agregar membresía</a>
+        <a class="btn btn--primary" href="{{ url_for('agregar_lectura') }}" style="text-decoration: none;">+ Agregar lectura</a>
+        <a class="btn btn--primary" href="{{ url_for('agregar_recomendacion') }}" style="text-decoration: none;">+ Agregar recomendación</a>
       </div>
 
-      <!-- Botón para volver a la página principal -->
       <div class="actions" style="justify-content:center; margin-top: 2rem;">
         <a class="btn btn--secondary" href="{{ url_for('pagina_principal') }}" style="text-decoration: none; background-color: #e0e0e0; color: #000;">⬅ Volver a la página principal</a>
       </div>
