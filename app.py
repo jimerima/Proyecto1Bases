@@ -32,6 +32,18 @@ DATABASE = "proyecto1"
 
 driver = GraphDatabase.driver(URI, auth=AUTH, database=DATABASE)
 
+def connect_to_neo4j():
+    global driver
+    try:
+        driver = GraphDatabase.driver(URI, auth=AUTH, database=DATABASE)
+        with driver.session() as session:
+            session.run("RETURN 1")
+        return True
+    except Exception as e:
+        print(f"Error al conectar a la base de datos Neo4j: {e}")
+        return False
+
+
 def initialize_db(driver):
     with driver.session() as session:
         session.run("MATCH (n) DETACH DELETE n")
@@ -45,6 +57,10 @@ def initialize_db(driver):
 
 @app.route("/")
 def index():
+    if not connect_to_neo4j():
+        flash("La base de datos debe estar abierta. Verifique que Neo4j esté corriendo.", "error")
+        return redirect(url_for("index"))
+
     initialize_db(driver)
     return render_template("index.html")
 
@@ -148,9 +164,7 @@ def vista_asociacion():
 def vista_consultas():
     return render_template("consultas.html")
 
-
-
-# Rutas para consultas (pendiente de implementar la lógica)
+# Rutas para vistas de consultas
 
 @app.route("/consulta1", methods=["GET", "POST"])
 def vista_consultar_lecturas():

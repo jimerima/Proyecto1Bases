@@ -8,39 +8,32 @@
       <div class="eyebrow" style="font-weight: bold; color:#000;">Consultas</div>
       <h1>Consultar miembros por club</h1>
       <p class="lead" style="text-align:center; font-size:1.05rem; margin-bottom:1.25rem; color:#000;">
-        Escribe el nombre del club y presiona <strong>Consultar</strong>.
+        Selecciona el nombre del club y presiona <strong>Consultar</strong>.
       </p>
 
       <form action="{{ url_for('vista_consultar_miembros') }}" method="post" style="margin-top:1rem;">
-        <!-- Club (input con datalist) -->
-        <div class="form-control" style="margin-bottom:1.25rem;">
-          <label for="club_nombre" style="font-weight:600; margin-bottom:.5rem; color:#000;">Club</label>
-          <input type="text" name="club_nombre" id="club_nombre" list="sugerencias_clubes"
-                 placeholder="Ej.: Club Latino (Moravia)"
-                 style="width:100%; padding:.8rem; font-size:1rem; border-radius:8px; border:1px solid #ccc;">
-          <input type="hidden" name="club_id" id="club_id">
-
-          <datalist id="sugerencias_clubes">
-            {# 'clubs' puede ser dict {id: {nombre, ubicacion?}} o lista de dicts #}
+        <!-- Club (select dentro de form-control) -->
+        <div class="form-group" style="margin-bottom:1.25rem;">
+          <label for="club_id" style="font-weight:600; margin-bottom:.5rem; color:#000;">Club</label>
+          <select name="club_id" id="club_id" class="form-control"
+                  style="width:100%; padding:.8rem; font-size:1rem; border-radius:8px; border:1px solid #ccc;">
+            <option value="" disabled selected>Selecciona un club</option>
             {% if clubs.items is defined %}
               {% for id, c in clubs.items() %}
-                <option value="{{ c.nombre }}{% if c.ubicacion %} ({{ c.ubicacion }}){% endif %}"
-                        data-id="{{ id }}">
+                <option value="{{ id }}">
                   {{ id }} — {{ c.nombre }}{% if c.ubicacion %} ({{ c.ubicacion }}){% endif %}
                 </option>
               {% endfor %}
             {% else %}
               {% for c in clubs %}
-                <option value="{{ c.nombre }}{% if c.ubicacion %} ({{ c.ubicacion }}){% endif %}"
-                        data-id="{{ c.id or c.idClub }}">
+                <option value="{{ c.id or c.idClub }}">
                   {{ c.id or c.idClub }} — {{ c.nombre }}{% if c.ubicacion %} ({{ c.ubicacion }}){% endif %}
                 </option>
               {% endfor %}
             {% endif %}
-          </datalist>
-
+          </select>
           <small style="display:block; margin-top:.4rem; color:#000;">
-            Usa las sugerencias para seleccionar el club exacto.
+            Selecciona el club exacto del listado.
           </small>
         </div>
 
@@ -68,11 +61,9 @@
               <tbody>
                 {% for m in miembros %}
                   <tr>
-                    
                     <td style="padding:.65rem; border-bottom:1px solid #f3f3f3;">
                       {{ m.nombre or m.Nombre }}
                     </td>
-                    
                   </tr>
                 {% endfor %}
               </tbody>
@@ -84,24 +75,4 @@
       {% endif %}
     </div>
   </div>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const input = document.getElementById('club_nombre');
-      const hidden = document.getElementById('club_id');
-      const datalist = document.getElementById('sugerencias_clubes');
-
-      input.addEventListener('input', function () {
-        let found = false;
-        for (const option of datalist.options) {
-          if (option.value === input.value) {
-            hidden.value = option.getAttribute('data-id');
-            found = true;
-            break;
-          }
-        }
-        if (!found) hidden.value = '';
-      });
-    });
-  </script>
-  
 {% endblock %}
