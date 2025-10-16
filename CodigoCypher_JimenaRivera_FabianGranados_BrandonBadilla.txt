@@ -1,143 +1,140 @@
-Portada
-Poner nombres
-
 ------------------------------------------------------
+Proyecto #1
+Código cypher para lectura de datos
+
+Grupo #4
+Badilla Rodríguez Brandon
+Rivera Madrigal María Jimena
+Granados Rivera Fabián De Jesus
+------------------------------------------------------
+
 ------------------ Gestionar datos -------------------
 
-------------------------------------------------------------------------------------------------------
------Autor
+------- Persona -------
 
------Crear autor
-CREATE (a:Autor {idAutor: $idAutor, Nombre: $Nombre, Nacionalidad: $Nacionalidad})
-
------Modificar autor
-MATCH (a:Autor {idAutor: $idAutor})
-SET a.Nombre = $Nombre, a.Nacionalidad = $Nacionalidad
-
------Obtener autor por id
-MATCH (a:Autor {idAutor: $idAutor})
-RETURN a
-
------Listar autores
-MATCH (a:Autor) RETURN a.idAutor AS idAutor, a.Nombre AS nombre, a.Nacionalidad AS nacionalidad ORDER BY a.idAutor
-
------Obtener idAutor mas reciente (Para generacion de nuevos idAutor)
-MATCH (a:Autor) RETURN a.idAutor AS idAutor ORDER BY a.idAutor DESC LIMIT 1
-
-
-------------------------------------------------------------------------------------------------------
------Club
-
------Crear club
-CREATE (c:Club {idClub: $idClub, Nombre: $Nombre, Ubicacion: $Ubicacion, Tematica: $Tematica})
-
------Modificar club
-MATCH (c:Club {idClub: $idClub})
-SET c.Nombre = $Nombre, c.Ubicacion = $Ubicacion, c.Tematica = $Tematica
-    
------Obtener club por id 
-MATCH (c:Club {idClub: $idClub}) 
-RETURN c
-
------Listar clubes 
-MATCH (c:Club) RETURN c.idClub AS idClub, c.Nombre AS nombre, c.Ubicacion AS ubicacion, c.Tematica AS tematica ORDER BY c.idClub
-
------Obtener idClub mas reciente (Para generacion de nuevos idClub)
-MATCH (c:Club) RETURN c.idClub AS idClub ORDER BY c.idClub DESC LIMIT 1
-
-
-------------------------------------------------------------------------------------------------------
------Libro
-
------Crear libro 
-CREATE (l:Libro {idLibro: $idLibro, Titulo: $Titulo, Genero: $Genero, Anno: $Anno})
-
------Modificar libro 
-MATCH (l:Libro {idLibro: $idLibro})
-SET l.Titulo = $Titulo,l.Genero = $Genero,l.Anno = $Anno
-
------Obtener libro por id 
-MATCH (l:Libro {idLibro: $idLibro})
-RETURN l
-
------Listar libros
-MATCH (l:Libro) RETURN l.idLibro AS idLibro, l.Titulo AS titulo, l.Genero AS genero, l.Anno AS anno ORDER BY l.idLibro
-
------Obtener idLibro mas reciente (Para generacion de nuevos idLibro)
-MATCH (l:Libro) RETURN l.idLibro AS idLibro ORDER BY l.idLibro DESC LIMIT 1
-
-
------------------------------------------------------------------------------------------------------
------Persona
-
------Crear persona
+-----> Crear persona
 CREATE (p:Persona {id: $id, Nombre: $Nombre, TipoLector: $TipoLector})
 
------Modificar persona
+-----> Modificar persona
 MATCH (p:Persona {id: $idPersona})
 SET p.Nombre = $Nombre, p.TipoLector = $TipoLector
 
------Obtener persona por id
+-----> Obtener persona por id
 MATCH (p:Persona {id: $idPersona})
 RETURN p
 
------Listar personas
+-----> Listar personas
 MATCH (p:Persona) RETURN p.id AS id, p.Nombre AS nombre, p.TipoLector AS tipoLector ORDER BY p.id
 
+------- Autor -------
 
------------------------------------------------
---------------- Asociaciones ------------------
+-----> Crear autor
+CREATE (a:Autor {idAutor: $idAutor, Nombre: $Nombre, Nacionalidad: $Nacionalidad})
 
-------------------------------------------------------------------------------------------------------
------Autoria 
+-----> Modificar autor
+MATCH (a:Autor {idAutor: $idAutor})
+SET a.Nombre = $Nombre, a.Nacionalidad = $Nacionalidad
 
------Agregar autoria
+-----> Obtener autor por id
+MATCH (a:Autor {idAutor: $idAutor})
+RETURN a
+
+-----> Listar autores
+MATCH (a:Autor) RETURN a.idAutor AS idAutor, a.Nombre AS nombre, a.Nacionalidad AS nacionalidad ORDER BY a.idAutor
+
+-----> Obtener idAutor mas reciente (Para generación de nuevos idAutor)
+MATCH (a:Autor) RETURN a.idAutor AS idAutor ORDER BY a.idAutor DESC LIMIT 1
+
+------- Club -------
+
+-----> Crear club
+CREATE (c:Club {idClub: $idClub, Nombre: $Nombre, Ubicacion: $Ubicacion, Tematica: $Tematica})
+
+-----> Modificar club
+MATCH (c:Club {idClub: $idClub})
+SET c.Nombre = $Nombre, c.Ubicacion = $Ubicacion, c.Tematica = $Tematica
+    
+-----> Obtener club por id 
+MATCH (c:Club {idClub: $idClub}) 
+RETURN c
+
+-----> Listar clubes 
+MATCH (c:Club) RETURN c.idClub AS idClub, c.Nombre AS nombre, c.Ubicacion AS ubicacion, c.Tematica AS tematica ORDER BY c.idClub
+
+-----> Obtener idClub mas reciente (Para generación de nuevos idClub)
+MATCH (c:Club) RETURN c.idClub AS idClub ORDER BY c.idClub DESC LIMIT 1
+
+------- Libro -------
+
+-----> Crear libro 
+CREATE (l:Libro {idLibro: $idLibro, Titulo: $Titulo, Genero: $Genero, Anno: $Anno})
+
+-----> Modificar libro 
+MATCH (l:Libro {idLibro: $idLibro})
+SET l.Titulo = $Titulo,l.Genero = $Genero,l.Anno = $Anno
+
+-----> Obtener libro por id 
+MATCH (l:Libro {idLibro: $idLibro})
+RETURN l
+
+-----> Listar libros
+MATCH (l:Libro) RETURN l.idLibro AS idLibro, l.Titulo AS titulo, l.Genero AS genero, l.Anno AS anno ORDER BY l.idLibro
+
+-----> Obtener idLibro mas reciente (Para generación de nuevos idLibro)
+MATCH (l:Libro) RETURN l.idLibro AS idLibro ORDER BY l.idLibro DESC LIMIT 1
+
+
+----------------------------------------------------
+------------------- Asociaciones -------------------
+
+------- Autoría  -------
+
+-----> Agregar autoría
 MATCH (a:Autor {idAutor: $idAutor}), (l:Libro {idLibro: $idLibro})
 MERGE (a)-[:ESCRIBIO]->(l)
 
-------------------------------------------------------------------------------------------------------
------Lectura
+------- Lectura -------
 
------Agregar lectura
+-----> Agregar lectura
 MATCH (p:Persona {id: $idPersona}), (l:Libro {idLibro: $idLibro}) 
 MERGE (p)-[:LEE]->(l)
 
------Obtener lecturas por persona
+-----> Obtener lecturas por persona
 MATCH (p:Persona {id: $idPersona})-[:LEE]->(l:Libro) 
 RETURN l.idLibro AS idLibro, l.Titulo AS Titulo, l.Genero AS Genero, l.Anno AS anno ORDER BY l.idLibro
         
 
-------------------------------------------------------------------------------------------------------
------Membresia
+------- Membresía -------
 
------Agregar membresia 
+-----> Agregar membresía 
 MATCH (p:Persona {id: $idPersona}), (c:Club {idClub: $idClub}) MERGE (p)-[:PERTENECE_A]->(c)
 
 
------Obtener miembros por club
+-----> Obtener miembros por club
 MATCH (p:Persona)-[:PERTENECE_A]->(c:Club {idClub: $idClub})
 RETURN p.id AS id, p.Nombre AS Nombre ORDER BY p.id
         
 
-------------------------------------------------------------------------------------------------------
------Recomendacion
+------- Recomendación -------
 
------Agregar recomendacion 
+-----> Agregar recomendación 
 MATCH (c:Club {idClub: $idClub}), (l:Libro {idLibro: $idLibro})
 MERGE (c)-[:RECOMIENDA]->(l)
         
 
---------------- Consultas --------------------
+---------------------------------------------
+--------------- Consultas -------------------
 
-Consulta #1:
+
+-----> Consulta #1 libros leídos por una persona
 MATCH (p:Persona {Nombre: $nombre_persona})-[:LEE]->(l:Libro)
 RETURN l.Titulo AS titulo, l.Genero AS genero, l.Anno AS anno
 
-Consulta #2:
+-----> Consulta #2 Personas del club
 MATCH (c:Club {Ubicacion: $nombre_club})<-[:PERTENECE_A]-(p:Persona)
 RETURN p.Nombre AS nombre_persona
 
-Consulta #3:
+-----> Consulta #3 Personas más libros
 MATCH (p:Persona)-[:PERTENECE_A]->(c:Club)
 MATCH (p)-[:LEE]->(l:Libro)<-[:RECOMIENDA]-(c)
 WITH p, c, count(DISTINCT l) AS cantidad
@@ -147,13 +144,13 @@ coalesce(c.Nombre) AS Club,
 cantidad AS LibrosRecomendadosLeidos
 ORDER BY LibrosRecomendadosLeidos DESC, Persona ASC, Club ASC;
 
-Consulta #4:
+-----> Consulta #4 Personas en más clubes
 MATCH (p:Persona)-[:PERTENECE_A]->(c:Club)
 WITH p, collect(coalesce(c.Nombre)) AS Clubes
 RETURN coalesce(p.Nombre) AS Persona, Clubes
 ORDER BY size(Clubes) DESC, Persona ASC;
 
-Consulta #5:
+-----> Consulta #5 Libros más populares
 MATCH (l:Libro)<-[:LEE]-(p:Persona)
 WITH l, count(DISTINCT p) AS lectores
 RETURN coalesce(l.Titulo) AS Libro, lectores AS NumeroDeLectores
