@@ -4,23 +4,6 @@ Poner nombres
 ------------------------------------------------------
 ------------------ Gestionar datos -------------------
 
------------------------------------------------------------------------------------------------------
------Persona
-
------Crear persona
-CREATE (p:Persona {id: $id, Nombre: $Nombre, TipoLector: $TipoLector})
-
------Modificar persona
-MATCH (p:Persona {id: $idPersona})
-SET p.Nombre = $Nombre, p.TipoLector = $TipoLector
-
------Obtener persona por id
-MATCH (p:Persona {id: $idPersona})
-RETURN p
-
------Listar personas
-MATCH (p:Persona) RETURN p.id AS id, p.Nombre AS nombre, p.TipoLector AS tipoLector ORDER BY p.id
-
 ------------------------------------------------------------------------------------------------------
 -----Autor
 
@@ -38,6 +21,10 @@ RETURN a
 -----Listar autores
 MATCH (a:Autor) RETURN a.idAutor AS idAutor, a.Nombre AS nombre, a.Nacionalidad AS nacionalidad ORDER BY a.idAutor
 
+-----Obtener idAutor mas reciente (Para generacion de nuevos idAutor)
+MATCH (a:Autor) RETURN a.idAutor AS idAutor ORDER BY a.idAutor DESC LIMIT 1
+
+
 ------------------------------------------------------------------------------------------------------
 -----Club
 
@@ -54,6 +41,9 @@ RETURN c
 
 -----Listar clubes 
 MATCH (c:Club) RETURN c.idClub AS idClub, c.Nombre AS nombre, c.Ubicacion AS ubicacion, c.Tematica AS tematica ORDER BY c.idClub
+
+-----Obtener idClub mas reciente (Para generacion de nuevos idClub)
+MATCH (c:Club) RETURN c.idClub AS idClub ORDER BY c.idClub DESC LIMIT 1
 
 
 ------------------------------------------------------------------------------------------------------
@@ -73,6 +63,26 @@ RETURN l
 -----Listar libros
 MATCH (l:Libro) RETURN l.idLibro AS idLibro, l.Titulo AS titulo, l.Genero AS genero, l.Anno AS anno ORDER BY l.idLibro
 
+-----Obtener idLibro mas reciente (Para generacion de nuevos idLibro)
+MATCH (l:Libro) RETURN l.idLibro AS idLibro ORDER BY l.idLibro DESC LIMIT 1
+
+
+-----------------------------------------------------------------------------------------------------
+-----Persona
+
+-----Crear persona
+CREATE (p:Persona {id: $id, Nombre: $Nombre, TipoLector: $TipoLector})
+
+-----Modificar persona
+MATCH (p:Persona {id: $idPersona})
+SET p.Nombre = $Nombre, p.TipoLector = $TipoLector
+
+-----Obtener persona por id
+MATCH (p:Persona {id: $idPersona})
+RETURN p
+
+-----Listar personas
+MATCH (p:Persona) RETURN p.id AS id, p.Nombre AS nombre, p.TipoLector AS tipoLector ORDER BY p.id
 
 
 -----------------------------------------------
