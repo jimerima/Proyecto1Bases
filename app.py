@@ -3,7 +3,7 @@
 # Integrantes:                                                       #
 # María Jimena Rivera Madrigal (2023066336)                          #
 # Fabián Granados Rivera (2023395799)                                #
-# Brandon Badilla Rodriguez ()
+# Brandon Badilla Rodriguez (2023047817)
 ######################################################################
 
 from flask import Flask, render_template, request, redirect, url_for, flash
@@ -59,7 +59,7 @@ def initialize_db(driver):
 def index():
     if not connect_to_neo4j():
         flash("La base de datos debe estar abierta. Verifique que Neo4j esté corriendo.", "error")
-        return redirect(url_for("index"))
+        return render_template("index.html")
 
     initialize_db(driver)
     return render_template("index.html")

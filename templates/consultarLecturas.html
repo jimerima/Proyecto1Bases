@@ -12,7 +12,28 @@
 
       <form action="{{ url_for('vista_consultar_lecturas') }}" method="post" style="margin-top:1rem;">
         <div class="form-control" style="margin-bottom:1.25rem;">
-          <label for="persona_nombre" style="font-weight:600; margin-bottom:.5rem; color:#fff;">O escribir nombre</label>
+          <!-- Dropdown first -->
+          <select id="persona_select" name="persona_select"
+                  style="width:100%; padding:.6rem; font-size:1rem; border-radius:8px; border:1px solid #ccc; margin-bottom:.6rem;">
+            <option value="">— Seleccionar persona —</option>
+            {% if personas.items is defined %}
+              {% for id, p in personas.items() %}
+                <option value="{{ id }}" data-name="{{ p.nombre }}">{{ p.nombre }}</option>
+              {% endfor %}
+            {% else %}
+              {% for p in personas %}
+                <option value="{{ p.id }}" data-name="{{ p.nombre }}">{{ p.nombre }}</option>
+              {% endfor %}
+            {% endif %}
+          </select>
+
+          <!-- Separator "O" -->
+          <div style="text-align:center; margin:0.6rem 0; color:#fff; font-weight:600;">O</div>
+
+          <!-- Free-text input with its own label -->
+          <label for="persona_nombre" style="font-weight:600; margin-bottom:.5rem; display:block; color:#fff;">
+            Escriba el nombre de la persona a consultar
+          </label>
           <input type="text" name="persona_nombre" id="persona_nombre" list="sugerencias_personas"
                  placeholder="Ej.: Ana Rojas"
                  style="width:100%; padding:.8rem; font-size:1rem; border-radius:8px; border:1px solid #ccc;">
@@ -40,16 +61,51 @@
             const input = document.getElementById('persona_nombre');
             const hidden = document.getElementById('persona_id');
             const datalist = document.getElementById('sugerencias_personas');
+            const select = document.getElementById('persona_select');
+
+            // When the select changes, populate the text input and hidden id
+            select.addEventListener('change', function() {
+              const opt = select.options[select.selectedIndex];
+              if (select.value) {
+                const name = opt.getAttribute('data-name') || opt.text;
+                input.value = name;
+                hidden.value = select.value;
+              } else {
+                input.value = '';
+                hidden.value = '';
+              }
+            });
+
+            // When typing in the text input, try to match a datalist option.
+            // If matched, set hidden id and sync select. If not, clear hidden and select.
             input.addEventListener('input', function() {
               let found = false;
               for (const option of datalist.options) {
                 if (option.value === input.value) {
-                  hidden.value = option.getAttribute('data-id');
+                  const id = option.getAttribute('data-id') || '';
+                  hidden.value = id;
+                  // try to set select to the matching id
+                  if (id) {
+                    let matched = false;
+                    for (const sopt of select.options) {
+                      if (sopt.value === id) {
+                        select.value = id;
+                        matched = true;
+                        break;
+                      }
+                    }
+                    if (!matched) select.value = '';
+                  } else {
+                    select.value = '';
+                  }
                   found = true;
                   break;
                 }
               }
-              if (!found) hidden.value = '';
+              if (!found) {
+                hidden.value = '';
+                select.value = '';
+              }
             });
           });
         </script>
